@@ -50,7 +50,6 @@ public:
 	virtual void drawBB(stack<glm::mat4>& modelView)=0;
 	virtual void updateBB()=0;
 	virtual Node *clone()=0;
-	virtual vector<glm::mat4> grabLightMatrices()=0;
 	virtual vector<graphics::Light> grabLightingObjects()=0;
 	void setParent(Node *parent)
 	{

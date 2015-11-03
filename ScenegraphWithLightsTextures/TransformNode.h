@@ -56,8 +56,21 @@ public:
 		vector<graphics::Light> returnMe = child->grabLightingObjects();
 
 		for(int i = 0; i < lighting.size(); i++){
-			//WE NEED DIRECTION AS WELL!				
+			//WE NEED DIRECTION AS WELL!
+			
 			returnMe.push_back(lighting[i]);
+		}
+
+
+		//Now apply transformations
+		for(int i = 0; i < returnMe.size(); i++){
+			//glm::vec4 transformLight = this->transform * returnMe[i].getPosition();
+
+			//returnMe[i].setDirection(transformLight);
+			//returnMe[i].setPosition(transform * returnMe[i].getPosition()));
+
+			returnMe[i].getSpotDirection() = this->transform * returnMe[i].getSpotDirection();
+			returnMe[i].getPosition() = this->transform * returnMe[i].getPosition();
 		}
 		
 		return returnMe;
@@ -69,24 +82,7 @@ public:
 		inside the transform node?
 
 	*/
-	virtual vector<glm::mat4> grabLightMatrices(){
-
-		vector<glm::mat4> returnMe = child->grabLightMatrices();
-
-		for(int i = 0; i < lighting.size(); i++){
-			//WE NEED DIRECTION AS WELL!
-			glm::mat4 lightTransform = glm::translate(glm::mat4(1.0f),glm::vec3(lighting[i].getPosition()));
-				
-			returnMe.push_back(lightTransform);
-		}
-
-		for(int i = 0; i < returnMe.size(); i++){
-			returnMe[i] = returnMe[i] * animation_transform * transform;
-		}
-		
-		return returnMe;
-
-	}
+	
 
 	virtual Node *getNode(string name)
 	{

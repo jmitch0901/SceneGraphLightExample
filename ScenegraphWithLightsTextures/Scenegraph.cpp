@@ -55,15 +55,6 @@ void Scenegraph::initShaderProgram(GLint program)
    //objectColorLocation = glGetUniformLocation(shaderProgram,"vColor");
 }
 
-vector<glm::mat4> Scenegraph::gatherLightingMatrices(){
-
-	if (root!=NULL)
-    {
-		return root->grabLightMatrices();      
-    }
-
-	return vector<glm::mat4>();
-}
 
 vector<graphics::Light> Scenegraph::gatherLightingObjects(){
 

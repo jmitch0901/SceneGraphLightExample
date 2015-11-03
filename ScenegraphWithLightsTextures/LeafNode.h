@@ -26,6 +26,8 @@ public:
 		material.setDiffuse(1.0f,0.6f,0.6f);
 		material.setSpecular(0.2f,0.1f,0.1f);
 		material.setShininess(1);
+
+		this->instanceOf->setMaterial(material);
 	}
 
 	~LeafNode(void)
@@ -40,29 +42,12 @@ public:
 		return newclone;
 	}
 
+
+	//DIRECTION AS WELL
 	virtual vector<graphics::Light> grabLightingObjects(){
 		return lighting;
 	}
-
-
-	//WE NEED DIRECTION AS WELL!
-	virtual vector<glm::mat4> grabLightMatrices(){
-
-		vector<glm::mat4> returnMe;
-		
-		for (int i=0;i<lighting.size();i++)
-		{
-
-			glm::mat4 lightTransform = glm::translate(glm::mat4(1.0f),glm::vec3(lighting[i].getPosition()));
-			//returnMe.push_back(glm::mat4(1.0f) * lighting[i].getPosition());
-
-			returnMe.push_back(lightTransform);
-		}		
-
-		
-		return returnMe;
-
-	}
+	
 
 	virtual void draw(stack<glm::mat4> &modelView)
     {
@@ -73,7 +58,9 @@ public:
 			//START DRAW HERE!
 
 			 //get the color
-            glm::vec4 color = material.getAmbient();
+            //glm::vec4 color = material.getAmbient();
+
+			instanceOf->setMaterial(material);
 
 
 			//The total transformation is whatever was passed to it, with its own transformation
@@ -85,7 +72,7 @@ public:
 			glUniform3fv(scenegraph->mat_specularLocation,1,glm::value_ptr(material.getSpecular()));
 			glUniform1f(scenegraph->mat_shininessLocation,material.getShininess());
 			
-			//glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()));
+			glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()));
 
 
 

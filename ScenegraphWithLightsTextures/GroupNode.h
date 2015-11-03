@@ -66,29 +66,7 @@ public:
 		return returnMe;
 	}
 
-	//Should be good
-	virtual vector<glm::mat4> grabLightMatrices(){
-
-		vector<glm::mat4> returnMe;
-
-		for(int i = 0; i < lighting.size(); i++){
-			glm::mat4 thisLightTransform = glm::translate(glm::mat4(1.0f),glm::vec3(lighting[i].getPosition()));
-			returnMe.push_back(thisLightTransform);
-		}
-		
-		for (int i=0;i<children.size();i++)
-		{
-			vector<glm::mat4> childLight = children[i]->grabLightMatrices();
-
-			for(int j = 0; j < childLight.size(); j++){
-				returnMe.push_back(childLight[j]);
-			}		
-		}		
-
-		
-		return returnMe;
-
-	}
+	
 
 	virtual Node* getNode(string name)
 	{
