@@ -32,6 +32,8 @@ public:
 		material.setShininess(1);
 
 		this->instanceOf->setMaterial(material);
+
+		texture=NULL;
 	}
 
 	~LeafNode(void)
@@ -42,7 +44,7 @@ public:
 	{
 		LeafNode *newclone = new LeafNode(instanceOf,scenegraph,name);
 		newclone->setMaterial(material);
-
+		newclone->setTexture(texture);
 		return newclone;
 	}
 

@@ -4,13 +4,24 @@
   <instance name="box" path="models/box" />
   <instance name="cylinder" path="models/cylinder" />
   <instance name="cone" path="models/cone" />
-  <image name="white" path="white.png" />
+  <image name="white" path="checkerboard.png" />
+  <image name="walls" path="brick.png" />
+  <image name="floor" path="grass.png" />
 
 
     <transform>
       <set>
         <scale>3 3 3</scale>
       </set>
+      <light>
+        <ambient>0.6 0.6 0.6</ambient>
+        <diffuse>0.6 0.6 0.6</diffuse>
+        <specular>0.8 0.8 0.8</specular>
+        <position>100 20 50</position>
+        <!--<direction>0 1 0 </direction>
+			<spotangle>5</spotangle>
+			<spotdirection>1 0 0 </spotdirection>-->
+      </light>
 
       <group name="full-model">
 
@@ -37,7 +48,14 @@
                   </set>
                   <object instanceof="sphere" texture ="white">
                     <material>
-                      <color>0 0 1</color>
+                      <ambient>1 .1 .1</ambient>
+                      <diffuse>1 .1 .1</diffuse>
+                      <specular>1 .1 .1</specular>
+                      <shininess>10</shininess>
+                      <absorption>0.5 </absorption>
+                      <reflection>0.1</reflection>
+                      <transparency>0.4</transparency>
+                      <refractive>1.2</refractive>
                     </material>
                   </object>
                 </transform>
@@ -58,7 +76,14 @@
                         </set>
                         <object instanceof="box" texture ="white">
                           <material>
-                            <color>1 0 1</color>
+                            <ambient>.4 .4 .4</ambient>
+                            <diffuse>.8 .8 .8</diffuse>
+                            <specular>.8 .8 .8</specular>
+                            <shininess>10</shininess>
+                            <absorption>0.5 </absorption>
+                            <reflection>0.1</reflection>
+                            <transparency>0.4</transparency>
+                            <refractive>1.2</refractive>
                           </material>
                         </object>
                       </transform>
@@ -71,7 +96,14 @@
                         </set>
                         <object instanceof="box" texture ="white">
                           <material>
-                            <color>1 0 1</color>
+                            <ambient>.4 .4 .4</ambient>
+                            <diffuse>.8 .8 .8</diffuse>
+                            <specular>.8 .8 .8</specular>
+                            <shininess>10</shininess>
+                            <absorption>0.5 </absorption>
+                            <reflection>0.1</reflection>
+                            <transparency>0.4</transparency>
+                            <refractive>1.2</refractive>
                           </material>
                         </object>
                       </transform>
@@ -85,19 +117,27 @@
                           </set>
                           <object instanceof="box" texture ="white">
                             <material>
-                              <color>1 0 1</color>
+                              <ambient>.4 .4 .4</ambient>
+                              <diffuse>.8 .8 .8</diffuse>
+                              <specular>.8 .8 .8</specular>
+                              <shininess>10</shininess>
+                              <absorption>0.5 </absorption>
+                              <reflection>0.1</reflection>
+                              <transparency>0.4</transparency>
+                              <refractive>1.2</refractive>
                             </material>
                           </object>
                         </transform>
                       </group>
 
-                      <transform>
-                        <!--Right arm rest-->
+                     <transform>
+                       <!--Right arm rest-->
                         <set>
                           <translate>.8 0 0</translate>
                         </set>
                         <group name="right-arm-rest" copyof="left-arm-rest"></group>
                       </transform>
+                  
 
                       <transform>
                         <!--The arm bar-->
@@ -108,7 +148,14 @@
                         </set>
                         <object instanceof="cylinder" texture ="white">
                           <material>
-                            <color>0 1 0</color>
+                            <ambient>.4 .4 .4</ambient>
+                            <diffuse>.8 .8 .8</diffuse>
+                            <specular>.8 .8 .8</specular>
+                            <shininess>10</shininess>
+                            <absorption>0.5 </absorption>
+                            <reflection>0.1</reflection>
+                            <transparency>0.4</transparency>
+                            <refractive>1.2</refractive>
                           </material>
                         </object>
                       </transform>
@@ -121,7 +168,14 @@
                           </set>
                           <object instanceof="cylinder" texture ="white">
                             <material>
-                              <color>1 1 1</color>
+                              <ambient>.4 .4 .4</ambient>
+                              <diffuse>.8 .8 .8</diffuse>
+                              <specular>.8 .8 .8</specular>
+                              <shininess>10</shininess>
+                              <absorption>0.5 </absorption>
+                              <reflection>0.1</reflection>
+                              <transparency>0.4</transparency>
+                              <refractive>1.2</refractive>
                             </material>
                           </object>
                         </transform>
@@ -176,7 +230,14 @@
               </set>
               <object instanceof="cylinder" texture ="white">
                 <material>
-                  <color>0 1 0</color>
+                  <ambient>.4 .4 .4</ambient>
+                  <diffuse>.8 .8 .8</diffuse>
+                  <specular>.8 .8 .8</specular>
+                  <shininess>10</shininess>
+                  <absorption>0.5 </absorption>
+                  <reflection>0.1</reflection>
+                  <transparency>0.4</transparency>
+                  <refractive>1.2</refractive>
                 </material>
               </object>
             </transform>
@@ -191,7 +252,14 @@
           </set>
           <object instanceof="cylinder" texture ="white">
             <material>
-              <color>1 1 0</color>
+              <ambient>.4 .4 .4</ambient>
+              <diffuse>.8 .8 .8</diffuse>
+              <specular>.8 .8 .8</specular>
+              <shininess>10</shininess>
+              <absorption>0.5 </absorption>
+              <reflection>0.1</reflection>
+              <transparency>0.4</transparency>
+              <refractive>1.2</refractive>
             </material>
           </object>
         </transform>
