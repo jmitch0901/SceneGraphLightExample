@@ -1,0 +1,216 @@
+<!--Swing Ride by Jonathan Mitchell (Ride with piston going up and down while swings rotate on top blue disk)-->
+<scene>
+  <instance name="sphere" path="models/sphere" />
+  <instance name="box" path="models/box" />
+  <instance name="cylinder" path="models/cylinder" />
+  <instance name="cone" path="models/cone" />
+  <image name="white" path="white.png" />
+
+
+    <transform>
+      <set>
+        <scale>3 3 3</scale>
+      </set>
+
+      <group name="full-model">
+
+
+        <transform name="transform-movable-stem">
+          <set>
+            <translate>0 -35 0</translate>
+          </set>
+
+          <group name="top-disk-with-movable-stem">
+
+            <transform name="transform-top-disk">
+              <set>
+                
+              </set>
+
+
+              <group name="top-disk">
+                <transform>
+                  <set>
+                    <!--45 5 45-->
+                    <scale>45 5 45</scale>
+                    <translate>0 60 0</translate>
+                  </set>
+                  <object instanceof="sphere" texture ="white">
+                    <material>
+                      <color>0 0 1</color>
+                    </material>
+                  </object>
+                </transform>
+
+                <group name="complete-chair">
+                  <transform>
+                    <set>
+                      <!--15 15 15-->
+                      <scale>15 15 15</scale>
+                      <rotate>10 0 0 1</rotate>
+                      <translate>45 2 0</translate>
+                    </set>
+                    <group name="chair">
+                      <transform>
+                        <!--Chair Back-->
+                        <set>
+                          <scale>.9 1.5 .1</scale>
+                        </set>
+                        <object instanceof="box" texture ="white">
+                          <material>
+                            <color>1 0 1</color>
+                          </material>
+                        </object>
+                      </transform>
+
+                      <transform>
+                        <!--Chair Cushion-->
+                        <set>
+                          <scale>.9 .5 .4</scale>
+                          <translate>0 -.5 .25</translate>
+                        </set>
+                        <object instanceof="box" texture ="white">
+                          <material>
+                            <color>1 0 1</color>
+                          </material>
+                        </object>
+                      </transform>
+
+                      <group name="left-arm-rest">
+                        <transform>
+                          <!--Left Arm Rest-->
+                          <set>
+                            <scale>.1 .25 .4</scale>
+                            <translate>-.4 -.125 .25</translate>
+                          </set>
+                          <object instanceof="box" texture ="white">
+                            <material>
+                              <color>1 0 1</color>
+                            </material>
+                          </object>
+                        </transform>
+                      </group>
+
+                      <transform>
+                        <!--Right arm rest-->
+                        <set>
+                          <translate>.8 0 0</translate>
+                        </set>
+                        <group name="right-arm-rest" copyof="left-arm-rest"></group>
+                      </transform>
+
+                      <transform>
+                        <!--The arm bar-->
+                        <set>
+                          <scale>.05 .7 .05</scale>
+                          <rotate>90 0 0 1</rotate>
+                          <translate>.35 -.05 .4</translate>
+                        </set>
+                        <object instanceof="cylinder" texture ="white">
+                          <material>
+                            <color>0 1 0</color>
+                          </material>
+                        </object>
+                      </transform>
+
+                      <group name="left-chair-rope">
+                        <transform>
+                          <set>
+                            <scale>.01 3 .01</scale>
+                            <translate>-.4 .75 0</translate>
+                          </set>
+                          <object instanceof="cylinder" texture ="white">
+                            <material>
+                              <color>1 1 1</color>
+                            </material>
+                          </object>
+                        </transform>
+                      </group>
+
+                      <transform>
+                        <set>
+                          <translate>.8 0 0</translate>
+                        </set>
+                        <group name="right-chair-rope" copyof="left-chair-rope"></group>
+                      </transform>
+
+
+                    </group>
+                  </transform>
+                </group>
+
+                <!--copy 3 more charis!-->
+                <transform>
+                  <set>
+                    <rotate>90 0 1 0</rotate>
+                  </set>
+                  <group copyof="complete-chair"></group>
+                </transform>
+
+                <transform>
+                  <set>
+                    <rotate>180 0 1 0</rotate>
+                  </set>
+                  <group copyof="complete-chair"></group>
+                </transform>
+
+                <transform>
+                  <set>
+                    <rotate>270 0 1 0</rotate>
+                  </set>
+                  <group copyof="complete-chair"></group>
+                </transform>
+                <!--end copy 3 chairs-->
+
+
+              </group>
+            </transform>
+            <!--End top-disk-->
+
+
+
+            <transform>
+              <set>
+                <scale>10 75 10</scale>
+                <translate>0 -20 0</translate>
+              </set>
+              <object instanceof="cylinder" texture ="white">
+                <material>
+                  <color>0 1 0</color>
+                </material>
+              </object>
+            </transform>
+          </group>
+        </transform>
+        <!--end movable stem top-->
+
+        <transform>
+          <set>
+            <scale>20 75 20</scale>
+            <translate>0 -95 0</translate>
+          </set>
+          <object instanceof="cylinder" texture ="white">
+            <material>
+              <color>1 1 0</color>
+            </material>
+          </object>
+        </transform>
+
+        <!--<transform>
+          <set>
+            <scale>30 1 30</scale>
+            <translate>0 -100 0</translate>
+          </set>
+          <object instanceof="sphere" texture ="white">
+            <material>
+              <color>0 1 0</color>
+            </material>
+          </object>
+        </transform>-->
+
+
+
+      </group>
+
+    </transform>
+</scene>

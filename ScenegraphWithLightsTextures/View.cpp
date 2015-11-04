@@ -74,7 +74,7 @@ void View::openFile(string filename)
 
 		glm::vec4 pos = gatheredLights[i].getPosition();
 		
-		cout<<"Light["<<i<<"]: Position(x,y,z)"<<pos.x<<", "<<pos.y<<", "<<pos.z<<endl;
+		cout<<"Light["<<i<<"]: Position(x,y,z)"<<pos[0]<<", "<<pos[1]<<", "<<pos[2]<<endl;
 	}
 	//
 
@@ -161,6 +161,7 @@ void View::initialize()
 	//cout<<glGetError()<<endl;
 
 	projectionLocation = glGetUniformLocation(program,"projection");
+
 	sgraph.initShaderProgram(program);
 
 	//cout<<glGetError()<<endl;
@@ -184,7 +185,7 @@ void View::draw()
         modelview.pop();
 
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,0,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,20,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
 
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
 
@@ -205,6 +206,7 @@ void View::draw()
 	//vector<glm::mat4> lightMatrix =  sgraph.gatherLightingMatrices();
 	for (int i=0;i<lightLocations.size();i++)
     {
+		//The equivalent to glBufferData, accept for lighting
 		glUniform3fv(lightLocations[i].ambientLocation,1,glm::value_ptr(gatheredLights[i].getAmbient()));
         glUniform3fv(lightLocations[i].diffuseLocation,1,glm::value_ptr(gatheredLights[i].getDiffuse()));
         glUniform3fv(lightLocations[i].specularLocation,1,glm::value_ptr(gatheredLights[i].getSpecular()));
@@ -234,6 +236,11 @@ void View::draw()
 
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sgraph.draw(modelview);
+
+
+
+
+
 	if(!debugBool){
 		cout<<glGetError()<<endl;
 	}

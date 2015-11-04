@@ -11,6 +11,10 @@
 class LeafNode : public Node
 {
 
+	
+private:
+	graphics::Texture *texture;
+
 protected:
 	graphics::Object *instanceOf;
 	graphics::Material material;
@@ -88,22 +92,33 @@ public:
 			
 
 
-			instanceOf->draw(GL_TRIANGLES);		
+				
 			
 			if(texture!=NULL){
+				
 				glEnable(GL_TEXTURE_2D);//Tell openGL don't ignore my texture mapping commands
 				glActiveTexture(GL_TEXTURE0);//Starts at 0 -> 8, can use to layer mroe textures
 
 
 				glBindTexture(GL_TEXTURE_2D,texture->getTextureID());//this texture is associated with texzture 0
 				glUniform1i(scenegraph->textureLocation,0); //bind GL_TEXTURE0 to sampler2D (whatever is bound to GL_TEXTURE0)
-				
 
-				glUniformMatrix4fv(scenegraph->texturematrixLocation,1,GL_FALSE,glm::value_ptr(instanceOf->getTextureTransform()));
+
+
+				if(texture->getName() == "floor"){
+					//cout<<"FLOOR HIT"<<endl;
+					//instanceOf->setTextureTransform(glm::scale(glm::mat4(1.0),glm::vec3(80,80,80)));
+					glUniformMatrix4fv(scenegraph->texturematrixLocation,1,GL_FALSE,glm::value_ptr(glm::scale(glm::mat4(1.0f),glm::vec3(80,80,80))*instanceOf->getTextureTransform()));
+				} else {
+					glUniformMatrix4fv(scenegraph->texturematrixLocation,1,GL_FALSE,glm::value_ptr(glm::scale(glm::mat4(1.0f),glm::vec3(2,2,2))*instanceOf->getTextureTransform()));
+				}
+				
 			} else {
-				cout<<"THERE WAS NO TEXTURE TARD"<<endl;
+				cout<<"THERE WAS NO TEXTURE, TARD"<<endl;
 			}
 		}
+
+		instanceOf->draw(GL_TRIANGLES);	
     }
 
 
@@ -157,7 +172,7 @@ public:
 	*/
 	void setTexture(graphics::Texture *tex)
 	{
-		cout << "Texture set to " << tex->getName() << endl;
+		//cout << "Texture set to " << tex->getName() << endl;
 		texture=tex;
 
 		/*this->texture=tex;
@@ -187,8 +202,6 @@ public:
 	}
 
 
-	private:
-		graphics::Texture *texture;
 
 
 };

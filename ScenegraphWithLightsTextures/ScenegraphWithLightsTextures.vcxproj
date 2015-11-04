@@ -85,14 +85,18 @@
     <ClInclude Include="Scenegraph.h" />
     <ClInclude Include="SceneXMLReader.h" />
     <ClInclude Include="TransformNode.h" />
+    <ClInclude Include="TwoDView.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scenegraph.cpp" />
     <ClCompile Include="ScenegraphViewer.cpp" />
+    <ClCompile Include="TwoDView.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="default.frag" />
+    <None Include="default.vert" />
     <None Include="gouraud-multiple.frag" />
     <None Include="gouraud-multiple.vert" />
     <None Include="phong-multiple.frag" />
@@ -101,9 +105,13 @@
     <None Include="triangles.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="full-scene.xml" />
     <Xml Include="humanoid.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="scene-maze.xml" />
+    <Xml Include="super-fun-ride.xml" />
+    <Xml Include="swing-ridev2.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

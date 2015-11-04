@@ -36,6 +36,9 @@
     <ClInclude Include="View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TwoDView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scenegraph.cpp">
@@ -47,6 +50,9 @@
     <ClCompile Include="View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TwoDView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="phong-multiple.frag" />
@@ -55,9 +61,23 @@
     <None Include="triangles.vert" />
     <None Include="gouraud-multiple.frag" />
     <None Include="gouraud-multiple.vert" />
+    <None Include="default.frag" />
+    <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="humanoid.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="scene-maze.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="super-fun-ride.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="swing-ridev2.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="full-scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

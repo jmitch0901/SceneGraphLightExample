@@ -58,10 +58,6 @@ void Scenegraph::initShaderProgram(GLint program)
 	texturematrixLocation = glGetUniformLocation(program,"texturematrix");
 	textureLocation = glGetUniformLocation(program,"image");
 
-
-
-
-
 }
 
 

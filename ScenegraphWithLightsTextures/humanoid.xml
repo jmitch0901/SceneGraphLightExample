@@ -3,7 +3,7 @@
 	<instance name="box" path="models/box" />
 	<instance name="cylinder" path="models/cylinder" />
 	<instance name="cone" path="models/cone" />
-	<image name="checkerboard" path="checkerboard.png" />
+	<image name="checkerboard" path="shesh.jpg" />
 	<image name="earthmap" path="earthmap.png" />
 	
 	

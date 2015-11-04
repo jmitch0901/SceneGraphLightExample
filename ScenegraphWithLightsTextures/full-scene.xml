@@ -1,0 +1,32 @@
+<!-- Models by Jonathan Mitchell and Mitchell Cooper-->
+<scene>
+  <transform name="transform-entire-scene">
+    <set>
+      <scale>3 3 3</scale>
+    </set>
+    <group>
+        <transform>
+            <set>
+                <scale>.5 .5 .5</scale>
+                <translate>60 23 66</translate>
+            </set>
+            <!--Super Fun Ride by Mitchell Cooper -->
+            <group from="super-fun-ride.xml"></group>
+        </transform>
+      <transform>
+        <set>
+          
+        </set>
+        <group from="scene-maze.xml"></group>
+      </transform>
+      <!--<transform>
+        <set>
+          <scale>.125 .125 .125</scale>
+          <translate>-85 40 -90</translate>
+        </set>-->
+        <!--Swing Ride by Jonathan Mitchell (Ride with piston going up and down while swings rotate on top blue disk)-->
+        <!--<group from="swing-ridev2.xml"></group>
+      </transform>-->
+    </group>
+  </transform>
+</scene>

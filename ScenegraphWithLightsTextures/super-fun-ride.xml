@@ -1,0 +1,273 @@
+<!--Super Fun Ride by Mitchell Cooper -->
+<scene>
+	<instance name="sphere" path="models/sphere" />
+	<instance name="box" path="models/box" />
+	<instance name="cylinder" path="models/cylinder" />
+	<instance name="cone" path="models/cone" />
+	<!--<instance name="bottle" path="models/bottle" />-->
+	<image name="white" path="white.png" />
+
+	<transform name="mainride">
+		<set>
+			<scale> 72 72 72 </scale>
+			<!-- ride of scale 72 -->
+			<translate> 0 -36 0 </translate>
+		</set>
+		<group name ="unit-ride-size">
+			<transform>
+				<set>
+					<!-- scale ride down to height 1 so that height can be adjusted easily above -->
+					<scale> 0.0125 0.0125 0.0125</scale>
+				</set>
+				<group>
+					<group name ="central-pivot">
+						<transform name ="animate-me-m8">
+							<set>
+								<translate>0 20 0</translate>
+							</set>
+							<group>
+								<group name ="all-amusement-arms">
+									<transform name ="animate-me-2">
+										<set>
+											<!-- animate here -->
+										</set>
+										<group>
+											<group name ="right-amusement-arm-group">
+												<transform name ="right-amusement-arm">
+													<set>
+														<!-- emtpy for animation -->
+													</set>
+													<group>
+														<group name ="right-seat">
+															<!-- move first seat into correct position -->
+															<transform>
+																<set>
+																	<translate>60 0 0</translate>
+																</set>
+																<group name ="seat">
+																	<transform name ="back-rest">
+																		<set>
+																			<scale>10 12.5 2.5 </scale>
+																			<translate>0 6.25 0</translate>
+																		</set>
+																		<object instanceof="box" texture ="white">
+																			<material>
+																				<ambient>1 0 .8</ambient>
+																				<diffuse>.8 0 .65</diffuse>
+																				<specular>.8 0 .65</specular>
+																				<shininess>10</shininess>
+																				<absorption>0.5 </absorption>
+																				<reflection>0.1</reflection>
+																				<transparency>0.4</transparency>
+																				<refractive>1.2</refractive>
+																			</material>
+																		</object>
+																	</transform>
+																	<transform name ="seat-base">
+																		<set>
+																			<scale>10 2.5 10 </scale>
+																			<translate>0 0 -5</translate>
+																		</set>
+																		<object instanceof="box" texture ="white">
+																			<material>
+																				<ambient>1 0 .8</ambient>
+																				<diffuse>.8 0 .65</diffuse>
+																				<specular>.8 0 .65</specular>
+																				<shininess>10</shininess>
+																				<absorption>0.5 </absorption>
+																				<reflection>0.1</reflection>
+																				<transparency>0.4</transparency>
+																				<refractive>1.2</refractive>
+																			</material>
+																		</object>
+																	</transform>
+																	<group name ="arm-rest">
+																		<transform name ="right-arm-rest">
+																			<set>
+																				<scale>1.5 6 10 </scale>
+																				<translate>5 3 -5</translate>
+																			</set>
+																			<object instanceof="box" texture ="white">
+																				<material>
+																					<ambient>1 0 .8</ambient>
+																					<diffuse>.8 0 .65</diffuse>
+																					<specular>.8 0 .65</specular>
+																					<shininess>10</shininess>
+																					<absorption>0.5 </absorption>
+																					<reflection>0.1</reflection>
+																					<transparency>0.4</transparency>
+																					<refractive>1.2</refractive>
+																				</material>
+																			</object>
+																		</transform>
+																	</group>
+																	<transform name ="left-arm-rest">
+																		<!-- move arm rest into correct position -->
+																		<set>
+																			<translate>-10 0 0</translate>
+																		</set>
+																		<group copyof ="right-arm-rest" />
+																	</transform>
+																	<!--<transform name ="seat-bottle">
+																		<set>
+																			<scale>5 5 5 </scale>
+																			<translate>5 8.5 -6</translate>
+																		</set>
+																		<object instanceof ="bottle" texture ="white">
+																			<material>
+																				<ambient>.4 .2 0</ambient>
+																				<diffuse>.8 .4 0</diffuse>
+																				<specular>.8 .4 0</specular>
+																				<shininess>10</shininess>
+																				<absorption>0.5 </absorption>
+																				<reflection>0.1</reflection>
+																				<transparency>0.4</transparency>
+																				<refractive>1.2</refractive>
+																			</material>
+																		</object>
+																	</transform>-->
+																	<transform name ="safety-bar">
+																		<set>
+																			<scale>1 10 1 </scale>
+																			<rotate>-90 0 0 1</rotate>
+																			<translate>-5 6 -10</translate>
+																		</set>
+																		<object instanceof ="cylinder" texture ="white">
+																			<material>
+																				<ambient>.8 .8 0</ambient>
+																				<diffuse>.8 .8 0</diffuse>
+																				<specular>.8 .8 0</specular>
+																				<shininess>10</shininess>
+																				<absorption>0.5 </absorption>
+																				<reflection>0.1</reflection>
+																				<transparency>0.4</transparency>
+																				<refractive>1.2</refractive>
+																			</material>
+																		</object>
+																	</transform>
+																</group>
+															</transform>
+														</group>
+														<group name ="right-connecting-beam">
+															<transform name ="right-connecting-beam-transform">
+																<!-- move first beam into correct position-->
+																<set>
+																	<scale>2 65 2</scale>
+																	<rotate>-90 0 0 1</rotate>
+																</set>
+																<object instanceof = "cylinder" texture ="white">
+																	<material>
+																		<ambient>.1 .1 1</ambient>
+																		<diffuse>.1 .1 1</diffuse>
+																		<specular>.1 .1 1</specular>
+																		<shininess>10</shininess>
+																		<absorption>0.5 </absorption>
+																		<reflection>0.1</reflection>
+																		<transparency>0.4</transparency>
+																		<refractive>1.2</refractive>
+																	</material>
+																</object>
+															</transform>
+														</group>
+													</group>
+												</transform>
+											</group>
+											<group name ="other-amusement-arms">
+												<transform name ="back-amusement-arm">
+													<!-- move beam into correct position-->
+													<set>
+														<rotate>90 0 1 0</rotate>
+														<rotate>30 1 0 0</rotate>
+													</set>
+													<group copyof ="right-amusement-arm-group" />
+												</transform>
+												<transform name ="left-amusement-arm">
+													<!-- move beam into correct position-->
+													<set>
+														<rotate>180 0 1 0</rotate>
+													</set>
+													<group copyof ="right-amusement-arm-group" />
+												</transform>
+												<transform name ="front-amusement-arm">
+													<!-- move beam into correct position-->
+													<set>
+														<rotate>270 0 1 0</rotate>
+														<rotate>-30 1 0 0</rotate>
+													</set>
+													<group copyof ="right-amusement-arm-group" />
+												</transform>
+											</group>
+										</group>
+									</transform>
+								</group>
+								<group name ="middle-sphere">
+									<transform>
+										<set>
+											<scale>10 10 10</scale>
+										</set>
+										<object instanceof ="sphere" texture ="white">
+											<material>
+												<ambient>.1 1 1</ambient>
+												<diffuse>.1 1 1</diffuse>
+												<specular>.1 1 1</specular>
+												<shininess>10</shininess>
+												<absorption>0.5 </absorption>
+												<reflection>0.1</reflection>
+												<transparency>0.4</transparency>
+												<refractive>1.2</refractive>
+											</material>
+										</object>
+									</transform>
+								</group>
+							</group>
+						</transform>
+					</group>
+					<group name ="middle-structure">
+						<transform name ="bottom-cone">
+							<set>
+								<scale>7.5 50 7.5</scale>
+							</set>
+							<object instanceof = "cone" texture ="white">
+								<material>
+									<ambient>.1 1 .1</ambient>
+									<diffuse>.1 1 .1</diffuse>
+									<specular>.1 1 .1</specular>
+									<shininess>10</shininess>
+									<absorption>0.5 </absorption>
+									<reflection>0.1</reflection>
+									<transparency>0.4</transparency>
+									<refractive>1.2</refractive>
+								</material>
+							</object>
+						</transform>
+						<transform name ="top-cone">
+							<set>
+								<rotate>180 0 0 1</rotate>
+								<translate>0 50 0</translate>
+							</set>
+							<group copyof ="bottom-cone" />
+						</transform>
+						<!--<transform name ="top-bottle-decoration">
+							<set>
+								<scale>40 40 40</scale>
+								<translate>0 70 0</translate>
+							</set>
+							<object instanceof ="bottle" texture ="white">
+								<material>
+									<ambient>.4 .2 0</ambient>
+									<diffuse>.8 .4 0</diffuse>
+									<specular>.8 .4 0</specular>
+									<shininess>10</shininess>
+									<absorption>0.5 </absorption>
+									<reflection>0.1</reflection>
+									<transparency>0.4</transparency>
+									<refractive>1.2</refractive>
+								</material>
+							</object>
+						</transform>-->
+					</group>
+				</group>
+			</transform>
+		</group>
+	</transform>
+</scene>

@@ -18,6 +18,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include "TwoDView.h"
 using namespace std;
 
 
@@ -29,6 +30,8 @@ void processEvent(sf::Event event,sf::RenderWindow& window);
 void drawText(sf::RenderWindow& window,string text,int x,int y);
 
 View v; //an object to our View class that encapsulates everything that we do.
+TwoDView v2;
+
 sf::Font font;
 sf::Clock sfclock;
 int frames;
@@ -36,7 +39,9 @@ double frame_rate;
 bool mousePressed;
 int mouseX,mouseY;
 
-string filename = "humanoid.xml";
+int width, height, startX, startY;
+
+string filename = "scene-maze.xml";
 
 int main(int argc, char *argv[])
 {
@@ -180,10 +185,28 @@ void display(sf::RenderWindow *window)
 	window->popGLStates();
 
 	//set up the background color of the window. This does NOT clear the window. Right now it is (0,0,0) which is black
-	glClearColor(0,0,0,0);
+	/*glClearColor(0,0,0,0);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //this command actually clears the window.
 	glEnable(GL_DEPTH_TEST);
 	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
+	*/
+	//set up the background color of the window. This does NOT clear the window. Right now it is (0,0,0) which is black
+	glClearColor(0,0,0,0);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //this command actually clears the window.
+	glEnable(GL_DEPTH_TEST);
+	glViewport(0,0,width,height);
+	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
+	
+
+
+
+	glScissor(startX,startY,width-startX,height-startY);
+	glEnable(GL_SCISSOR_TEST);
+	glClearColor(0,0,0,0);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glViewport(startX,startY,width-startX,height-startY);
+	v2.draw();
+	glDisable(GL_SCISSOR_TEST);
 
 	if (frames>500)
 	{
@@ -199,7 +222,7 @@ void display(sf::RenderWindow *window)
 
 	str << "Frame rate " << frame_rate;
 	// Draw some text on top of our OpenGL object
-	drawText(window,str.str(),window->getSize().x,20);
+	//drawText(window,str.str(),window->getSize().x,20);
     
 	
 	// Finally, display the rendered frame on screen
@@ -218,9 +241,31 @@ void resize(int w,int h)
     //delegate to our view class.
     v.resize(w,h);
 
+	v2.resize(w,h);
+
+	width=w;
+	height=h;
+
+
+
+
+	startX = (2.0f/3.0f)*w;
+	startY = (2.0f/3.0f)*h;
+
+	/*if(startX<startY){
+		startY = startX;
+	} else{
+		startX = startY;
+	}*/
+
+	//startX = (startX + startY) / 2;
+	//startY = startX;
+
+	
+
     //sets the viewport to cover the entire area of the resized window
     //glViewport(leftx,topy,width,height)
-    glViewport(0,0,w,h);
+    //glViewport(0,0,w,h);
 }
 
 void init(string& filename)
@@ -235,7 +280,9 @@ void init(string& filename)
 	v.initialize();
 	v.openFile(filename);
 
-	if (!font.loadFromFile("resources/GARA.ttf"))
-		return;
+	v2.initialize("maze-50x50.txt", "maze-50x50-paths.txt");
+
+	/*if (!font.loadFromFile("resources/GARA.ttf"))
+		return;*/
 
 }
