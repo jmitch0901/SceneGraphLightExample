@@ -69,8 +69,8 @@ public:
 			//returnMe[i].setDirection(transformLight);
 			//returnMe[i].setPosition(transform * returnMe[i].getPosition()));
 
-			returnMe[i].getSpotDirection() = this->transform * returnMe[i].getSpotDirection();
-			returnMe[i].getPosition() = this->transform * returnMe[i].getPosition();
+			/*returnMe[i].getSpotDirection() =*/ returnMe[i].setSpotDirection(glm::vec3( this->transform * returnMe[i].getSpotDirection()));
+			/*returnMe[i].getPosition() = */ returnMe[i].setPosition(glm::vec3(this->transform * returnMe[i].getPosition()));
 		}
 		
 		return returnMe;

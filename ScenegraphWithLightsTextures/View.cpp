@@ -20,6 +20,7 @@ View::View()
 {
     trackballTransform = glm::mat4(1.0);
 	time = 0.0;
+	debugBool=false;
 }
 
 View::~View()
@@ -55,42 +56,30 @@ void View::openFile(string filename)
 	cout << "Loading...";
 	reader.importScenegraph(filename,sgraph);
 	cout << "Done" << endl;
-}
-
-void View::initialize()
-{
-    //populate our shader information. The two files below are present in this project.
-    ShaderInfo shaders[] =
-    {
-        {GL_VERTEX_SHADER,"phong-multiple.vert"},
-        {GL_FRAGMENT_SHADER,"phong-multiple.frag"},
-        {GL_NONE,""} //used to detect the end of this array
-    };
-
-    p_program = createShaders(shaders);
-
-	if (p_program<=0)
-		exit(1);
-
-	shaders[0].filename = "gouraud-multiple.vert";
-	shaders[1].filename = "gouraud-multiple.frag";
-
-    g_program = createShaders(shaders);
-
-	if (g_program<=0)
-		exit(1);
-
-	//CAN change
-	usePhongShading();
-
-    glUseProgram(program);
 
 
-	sgraph.initShaderProgram(program);
 
 	//GATHER THE LIGHTING AND INIT LIGHTING FOR GPU
 
+	cout<<"ABOUT THE GATHER LIGHTING"<<endl;
 	gatheredLights = sgraph.gatherLightingObjects();
+	cout<<"GOT "<<gatheredLights.size()<<" LIGHTS!"<<endl;
+
+	cout<<"Your Lights: "<<endl;
+
+
+	//FOR DEBUGGING
+	for(int i = 0 ; i < gatheredLights.size(); i++){
+
+
+		glm::vec4 pos = gatheredLights[i].getPosition();
+		
+		cout<<"Light["<<i<<"]: Position(x,y,z)"<<pos.x<<", "<<pos.y<<", "<<pos.z<<endl;
+	}
+	//
+
+
+	//cout<<glGetError()<<endl;
 
 	for (int i=0;i<gatheredLights.size();i++)
     {
@@ -130,10 +119,53 @@ void View::initialize()
 		lightLocations.push_back(lightLocation);
     }
 
+	
+	//cout<<glGetError()<<endl;
+
+
+
 
 
 	//END LIGHTING GATHERING
+
+
+
+
+}
+
+void View::initialize()
+{
+    //populate our shader information. The two files below are present in this project.
+    ShaderInfo shaders[] =
+    {
+        {GL_VERTEX_SHADER,"phong-multiple.vert"},
+        {GL_FRAGMENT_SHADER,"phong-multiple.frag"},
+        {GL_NONE,""} //used to detect the end of this array
+    };
+
+     program = p_program = createShaders(shaders);
+
+	if (p_program<=0)
+		exit(1);
+
+	shaders[0].filename = "gouraud-multiple.vert";
+	shaders[1].filename = "gouraud-multiple.frag";
+
+    g_program = createShaders(shaders);
+
+	if (g_program<=0)
+		exit(1);
+
+    glUseProgram(program);
+
+	//cout<<glGetError()<<endl;
+
+	projectionLocation = glGetUniformLocation(program,"projection");
+	sgraph.initShaderProgram(program);
+
+	//cout<<glGetError()<<endl;
 	
+	glUseProgram(0);
     
 }
 
@@ -151,15 +183,24 @@ void View::draw()
     while (!modelview.empty())
         modelview.pop();
 
-	GLuint a;
-
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,0,80),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,0,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
 
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
 
+
+	if(!debugBool){
+		cout<<glGetError()<<endl;
+	}
+	
+
 	//START LIGHTING
-	glUniform1i(numLightsLocation,gatheredLights.size());
+	//BUG HERE
+	glUniform1i(sgraph.numLightsLocation,gatheredLights.size());
+
+	if(!debugBool){
+		cout<<glGetError()<<endl;
+	}
 
 	//vector<glm::mat4> lightMatrix =  sgraph.gatherLightingMatrices();
 	for (int i=0;i<lightLocations.size();i++)
@@ -170,10 +211,15 @@ void View::draw()
 		glUniform4fv(lightLocations[i].positionLocation,1,glm::value_ptr(gatheredLights[i].getPosition()));
     }
 
+	if(!debugBool){
+		cout<<glGetError()<<endl;
+	}
 
 
 	//END LIGHTING
 
+
+	//DO WE NEED TO DRAW THE GRAPH FIRST????
 	/*
      *Instead of directly supplying the modelview matrix to the shader here, we pass it to the objects
      *This is because the object's transform will be multiplied to it before it is sent to the shader
@@ -185,14 +231,19 @@ void View::draw()
      *This is so that the objects can supply some of their attributes without having any direct control
      *of the shader itself.
      */
-	a = glGetError();
+
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sgraph.draw(modelview);
-	a = glGetError();
+	if(!debugBool){
+		cout<<glGetError()<<endl;
+	}
     glFinish();
-	a = glGetError();
+
 	glUseProgram(0);
     modelview.pop();
+
+
+	debugBool=true;
 }
 
 void View::mousepress(int x, int y)

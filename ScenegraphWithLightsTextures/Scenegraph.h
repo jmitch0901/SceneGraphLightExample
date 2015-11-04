@@ -59,6 +59,11 @@ public:
 		return textures[name];
 	}
 
+
+	GLint numLightsLocation;
+protected:
+	
+
 private:
     Node *root;
 	map<string,graphics::Object *> instances;
@@ -69,8 +74,10 @@ private:
 	//GLint objectColorLocation,modelviewLocation;
 
 	GLint modelviewLocation,normalMatrixLocation;
-    GLint numLightsLocation;
+    
     GLint mat_ambientLocation,mat_diffuseLocation,mat_specularLocation,mat_shininessLocation;
+
+	GLint texturematrixLocation,textureLocation;
 };
 
 #endif // SCENEGRAPH_H

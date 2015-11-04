@@ -106,6 +106,8 @@ private:
 
 	vector<LightLocation> lightLocations;
 	vector<graphics::Light> gatheredLights;
+
+	bool debugBool;
 };
 
 #endif // VIEW_H

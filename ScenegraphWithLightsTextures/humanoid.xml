@@ -49,7 +49,7 @@
 									<set>
 										<scale>1 20 1 </scale>					
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
 											<ambient>1 0 0</ambient>
 											<diffuse>1 0 0</diffuse>
@@ -81,7 +81,7 @@
 										<set>
 											<scale>2 2 2 </scale>										
 										</set>
-										<object instanceof="sphere">
+										<object instanceof="sphere" texture="checkerboard">
 											<material>
 												<color>0 1 0</color>
 											</material>
@@ -96,7 +96,7 @@
 										<set>
 											<scale>1 20 1 </scale>										
 										</set>
-										<object instanceof="cylinder">
+										<object instanceof="cylinder" texture="checkerboard">
 											<material>
 												<color>1 0 0</color>
 											</material>
@@ -130,11 +130,11 @@
 									<set>
 										<scale>1 20 1 </scale>					
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
-											<ambient>1 0 0</ambient>
-											<diffuse>1 0 0</diffuse>
-											<specular>1 0 0</specular>
+											<ambient>0.8 0.2 0.2</ambient>
+											<diffuse>0.8 0.2 0.2</diffuse>
+											<specular>0.4 0.1 0.1</specular>
 											<shininess>10</shininess>
 											<!--the following four will be relevant in ray tracer -->
 											<absorption>0.5 </absorption>
@@ -162,7 +162,7 @@
 										<set>
 											<scale>2 2 2 </scale>										
 										</set>
-										<object instanceof="sphere">
+										<object instanceof="sphere" texture="checkerboard">
 											<material>
 												<color>0 1 0</color>
 											</material>
@@ -177,7 +177,7 @@
 										<set>
 											<scale>1 20 1 </scale>										
 										</set>
-										<object instanceof="cylinder">
+										<object instanceof="cylinder" texture="checkerboard">
 											<material>
 												<color>1 0 0</color>
 											</material>
@@ -194,7 +194,7 @@
 										</set>
 										<object instanceof="sphere" texture="checkerboard">
 											<material>
-												<color>0 1 0</color>
+												<color>1 1 1</color>
 											</material>
 										</object>			
 									</transform>
@@ -215,7 +215,7 @@
 										<rotate>90 0 0 1</rotate>
 										<translate>5 0 0</translate>
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
 											<color>1 1 0</color>
 										</material>
@@ -227,7 +227,7 @@
 										<scale>1 25 1 </scale>
 										<translate>0 2 0 </translate>
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
 											<color>0 1 0 </color>
 										</material>
@@ -240,7 +240,7 @@
 										<rotate>90 0 0 1</rotate>
 										<translate>10 27 0</translate>
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
 											<color>1 1 0 </color>
 										</material>
@@ -263,7 +263,7 @@
 														<scale>1 10 1 </scale>
 														
 													</set>
-													<object instanceof="cylinder">
+													<object instanceof="cylinder" texture="checkerboard">
 														<material>
 															<color>1 0 0</color>
 														</material>
@@ -279,7 +279,7 @@
 														<scale>2 2 2 </scale>
 														
 													</set>
-													<object instanceof="sphere">
+													<object instanceof="sphere" texture="checkerboard">
 														<material>
 															<color>0 1 0</color>
 														</material>
@@ -295,7 +295,7 @@
 														<scale>1 10 1 </scale>
 														<translate>0 -10 0 </translate>	<!-- so that upper tip of cylinder is at origin -->
 													</set>
-													<object instanceof="cylinder">
+													<object instanceof="cylinder" texture="checkerboard">
 														<material>
 															<color>1 0 1</color>
 														</material>
@@ -322,7 +322,7 @@
 														<scale>1 10 1 </scale>
 														
 													</set>
-													<object instanceof="cylinder">
+													<object instanceof="cylinder" texture="checkerboard">
 														<material>
 															<color>1 0 0</color>
 														</material>
@@ -338,7 +338,7 @@
 														<scale>2 2 2 </scale>
 														
 													</set>
-													<object instanceof="sphere">
+													<object instanceof="sphere" texture="checkerboard">
 														<material>
 															<color>0 1 0</color>
 														</material>
@@ -354,7 +354,7 @@
 														<scale>1 10 1 </scale>
 														<translate>0 -10 0 </translate>	<!-- so that upper tip of cylinder is at origin -->
 													</set>
-													<object instanceof="cylinder">
+													<object instanceof="cylinder" texture="checkerboard">
 														<material>
 															<color>1 0 1</color>
 														</material>
@@ -380,7 +380,7 @@
 									<set>
 										<scale>1 5 1 </scale>
 									</set>
-									<object instanceof="cylinder">
+									<object instanceof="cylinder" texture="checkerboard">
 										<material>
 											<color> 1 0 0 </color>
 										</material>
@@ -392,7 +392,7 @@
 										<scale> 3.2 3.5 3.2</scale>
 										<translate>0 8 0 </translate>
 									</set>
-									<object instanceof="sphere">
+									<object instanceof="sphere" texture="checkerboard">
 										<material>
 											<color> 1 1 0 </color>
 										</material>

@@ -52,7 +52,16 @@ void Scenegraph::initShaderProgram(GLint program)
     mat_diffuseLocation = glGetUniformLocation(program,"material.diffuse");
     mat_specularLocation = glGetUniformLocation(program,"material.specular");
     mat_shininessLocation = glGetUniformLocation(program,"material.shininess");
-   //objectColorLocation = glGetUniformLocation(shaderProgram,"vColor");
+
+    //objectColorLocation = glGetUniformLocation(shaderProgram,"vColor");
+
+	texturematrixLocation = glGetUniformLocation(program,"texturematrix");
+	textureLocation = glGetUniformLocation(program,"image");
+
+
+
+
+
 }
 
 
@@ -60,8 +69,11 @@ vector<graphics::Light> Scenegraph::gatherLightingObjects(){
 
 	if (root!=NULL)
     {
-		return root->grabLightingObjects();      
-    }
+		return root->grabLightingObjects();  
+
+    } else {
+		cout<<"For some reason, root in the scene graph was NULL!"<<endl;
+	}
 
 	return vector<graphics::Light>();
 }
@@ -75,7 +87,9 @@ void Scenegraph::draw(stack<glm::mat4>& modelView)
     if (root!=NULL)
     {
         root->draw(modelView);
-    }
+    } else {
+		cout<<"ROOT WAS NULL FOR DRAWING"<<endl;
+	}
 
 	/*if (root!=NULL)
 	{

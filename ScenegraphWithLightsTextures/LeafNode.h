@@ -64,8 +64,8 @@ public:
 
 
 			//The total transformation is whatever was passed to it, with its own transformation
-			glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()));
-			glUniformMatrix4fv(scenegraph->normalMatrixLocation,1,GL_FALSE,glm::value_ptr(glm::transpose(glm::inverse(modelView.top()))));
+			glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()*instanceOf->getTransform()));
+			glUniformMatrix4fv(scenegraph->normalMatrixLocation,1,GL_FALSE,glm::value_ptr(glm::transpose(glm::inverse(modelView.top()*instanceOf->getTransform()))));
 
 			glUniform3fv(scenegraph->mat_ambientLocation,1,glm::value_ptr(material.getAmbient()));
 			glUniform3fv(scenegraph->mat_diffuseLocation,1,glm::value_ptr(material.getDiffuse()));
@@ -76,7 +76,33 @@ public:
 
 
 
+
+
+
+			//glEnable(GL_TEXTURE_2D);//Tell openGL don't ignore my texture mapping commands
+			//glActiveTexture(GL_TEXTURE0);//Starts at 0 -> 8, can use to layer mroe textures
+
+
+			//glBindTexture(GL_TEXTURE_2D,textureID);//this texture is associated with texzture 0
+			//glUniform1i(textureLocation,0); //bind GL_TEXTURE0 to sampler2D (whatever is bound to GL_TEXTURE0)
+			
+
+
 			instanceOf->draw(GL_TRIANGLES);		
+			
+			if(texture!=NULL){
+				glEnable(GL_TEXTURE_2D);//Tell openGL don't ignore my texture mapping commands
+				glActiveTexture(GL_TEXTURE0);//Starts at 0 -> 8, can use to layer mroe textures
+
+
+				glBindTexture(GL_TEXTURE_2D,texture->getTextureID());//this texture is associated with texzture 0
+				glUniform1i(scenegraph->textureLocation,0); //bind GL_TEXTURE0 to sampler2D (whatever is bound to GL_TEXTURE0)
+				
+
+				glUniformMatrix4fv(scenegraph->texturematrixLocation,1,GL_FALSE,glm::value_ptr(instanceOf->getTextureTransform()));
+			} else {
+				cout<<"THERE WAS NO TEXTURE TARD"<<endl;
+			}
 		}
     }
 
@@ -114,6 +140,7 @@ public:
 	virtual void setMaterial(graphics::Material& mat)
 	{
 		material = mat;
+		instanceOf->setMaterial(mat);
 	}
 
 	/*
@@ -131,7 +158,37 @@ public:
 	void setTexture(graphics::Texture *tex)
 	{
 		cout << "Texture set to " << tex->getName() << endl;
+		texture=tex;
+
+		/*this->texture=tex;
+		sf::Image im;
+	
+		im.loadFromFile("checkerboard.png");
+
+		//origin of the image is top left, all our texture coordinates are with respect to bottom left, so flip image vertically
+		im.flipVertically();
+
+		
+    
+		glGenTextures(1,&textureID); //get a unique texture ID
+		glBindTexture(GL_TEXTURE_2D,textureID);// bind this texture as "current". All texture commands henceforth will apply to this ID
+
+
+		//come back
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);//GL_REPEAT MEANING if larger than value 1, then REPEAT the pattern! DO this for s coordinate!
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);//GL CLAMP means anything < 0 is 0, anything > 1 is 1.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //Used for whenresolution of image is too small for pixle vount on screen
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);//GL_LINEAR / GL_NEAREST. LINEAR more appealing but more expensive.
+
+		//texture equivalent as glbufferdata
+		//ACTUALLY copies the texture over!
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, im.getSize().x,im.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, im.getPixelsPtr());//r g b a r g b a r g b a ...... in array
+		*/
 	}
+
+
+	private:
+		graphics::Texture *texture;
 
 
 };
