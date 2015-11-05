@@ -61,7 +61,7 @@ void View::openFile(string filename)
 
 	//GATHER THE LIGHTING AND INIT LIGHTING FOR GPU
 
-	cout<<"ABOUT THE GATHER LIGHTING"<<endl;
+	cout<<"ABOUT TO GATHER LIGHTING"<<endl;
 	gatheredLights = sgraph.gatherLightingObjects();
 	cout<<"GOT "<<gatheredLights.size()<<" LIGHTS!"<<endl;
 

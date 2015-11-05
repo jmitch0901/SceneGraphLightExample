@@ -94,8 +94,8 @@ void TwoDView::initialize(string fileName, string pathFile)
 		}
 	}
 
-	cout << "row 34: " << path[34][25].row << ", col 25: " << path[34][25].col << endl;
-	cout << "row 0: " << path[0][1].row << ", col 1: " << path[0][1].col << endl;
+	//cout << "row 34: " << path[34][25].row << ", col 25: " << path[34][25].col << endl;
+	//cout << "row 0: " << path[0][1].row << ", col 1: " << path[0][1].col << endl;
 	pushPath(start[0], start[1]);
 
     

@@ -1,7 +1,7 @@
 <scene>
 	<instance name="box" path="models/box" />
 	<image name="walls" path="brick.png" />
-	<image name="floor" path="white.png" />
+	<image name="floor" path="grass.png" />
 	<transform>
 		<set>
 			<scale>2 2 2</scale>
