@@ -118,26 +118,26 @@ void processEvent(sf::Event event,sf::RenderWindow& window)
 			v.openFile(filename);
 			break;
 		case sf::Keyboard::Num1:
-			v.switchView(1);
+			v.helloMrMarshmellow();
 			break;
 		case sf::Keyboard::Num2:
-			v.switchView(2);
+			v.goodbyeMrMarshmellow();
 			break;
 		case sf::Keyboard::Left:
 			navi = v2.navigate(0);
-			v.navigate(0, navi);
+			v.moveMrMarshmellow(0, navi);
 			break;
 		case sf::Keyboard::Right:
 			navi = v2.navigate(1);
-			v.navigate(1, navi);
+			v.moveMrMarshmellow(1, navi);
 			break;
 		case sf::Keyboard::Up:
 			navi = v2.navigate(2);
-			v.navigate(2, navi);
+			v.moveMrMarshmellow(2, navi);
 			break;
 		case sf::Keyboard::Down:
 			navi = v2.navigate(3);
-			v.navigate(3, navi);
+			v.moveMrMarshmellow(3, navi);
 			break;
 		}
 		break;
@@ -218,7 +218,7 @@ void display(sf::RenderWindow *window)
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //this command actually clears the window.
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0,0,width,height);
-	v2.draw(); //simply delegate to our view class that has all the data and does all the rendering
+	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
 	
 
 
@@ -227,8 +227,8 @@ void display(sf::RenderWindow *window)
 	//glEnable(GL_SCISSOR_TEST);
 	//glClearColor(0,0,0,0);
 	//glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	//glViewport(startX,startY,width-startX,height-startY);
-	//v2.draw();
+	glViewport(startX,startY,width-startX,height-startY);
+	v2.draw();
 	//glDisable(GL_SCISSOR_TEST);
 
 	if (frames>500)
