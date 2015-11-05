@@ -96,6 +96,7 @@ void TwoDView::initialize(string fileName, string pathFile)
 
 	//cout << "row 34: " << path[34][25].row << ", col 25: " << path[34][25].col << endl;
 	//cout << "row 0: " << path[0][1].row << ", col 1: " << path[0][1].col << endl;
+	optimalPath = -1;
 	pushPath(start[0], start[1]);
 
 	navigate(4);
@@ -398,6 +399,8 @@ bool TwoDView::navigate(int inputKey){
 				}
 				if(!backwards){
 					setCursor();
+					steps++;
+					//cout << steps << endl;
 				}
 			}
 			break;
@@ -407,6 +410,8 @@ bool TwoDView::navigate(int inputKey){
 			navigate(2);
 			direction = (direction + 2) % 4;
 			setCursor();
+			steps++;
+			//cout << steps << endl;
 			backwards = false;
 			break;
 		case 4:{			//Initialize;
@@ -435,6 +440,7 @@ bool TwoDView::navigate(int inputKey){
 			}
 
 			backwards = false;
+			steps = 0;
 
 			setCursor();
 
@@ -510,6 +516,14 @@ void TwoDView::setCursor(){
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER,vbo[ArrayBuffer]);
+}
+
+int TwoDView::getSteps(){
+	return steps;
+}
+
+int TwoDView::getOptimalPath(){
+	return optimalPath;
 }
 
 void TwoDView::draw()
@@ -922,6 +936,7 @@ void TwoDView::pushPath(int i, int j){
 			indices.push_back(totalVerts);
 		}
 
+		optimalPath++;
 		pushPath(path[i][j].row, path[i][j].col);
 	}
 }

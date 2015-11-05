@@ -64,8 +64,11 @@ public:
 
 		//Now apply transformations
 		for(int i = 0; i < returnMe.size(); i++){
+			//returnMe[i].setSpotDirection(glm::vec3(returnMe[i].getSpotDirection() * this->transform * animation_transform ));
+			//returnMe[i].setPosition(glm::vec3(returnMe[i].getPosition() * this->transform * animation_transform ));
+
 			returnMe[i].setSpotDirection(glm::vec3(returnMe[i].getSpotDirection() * this->transform * animation_transform ));
-			returnMe[i].setPosition(glm::vec3(returnMe[i].getPosition() * this->transform * animation_transform ));
+			returnMe[i].setPosition(glm::vec3(animation_transform * this->transform * returnMe[i].getPosition()  ));
 		}
 		
 		return returnMe;

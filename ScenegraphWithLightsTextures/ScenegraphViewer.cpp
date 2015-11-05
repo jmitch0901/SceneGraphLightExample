@@ -41,6 +41,7 @@ bool mousePressed;
 int mouseX,mouseY;
 
 int width, height, startX, startY;
+int optimalPath;
 
 string filename = "full-scene.xml";
 
@@ -55,8 +56,8 @@ int main(int argc, char *argv[])
 	contextSettings.minorVersion = 0;
 
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Scenegraph Viewer", sf::Style::Default, contextSettings);
-	resize(800,600);
+    sf::RenderWindow window(sf::VideoMode(700, 700), "Scenegraph Viewer", sf::Style::Default, contextSettings);
+	resize(700,700);
   //  window.setVerticalSyncEnabled(true);
 
     // Make it the active window for OpenGL calls
@@ -223,13 +224,13 @@ void display(sf::RenderWindow *window)
 
 
 
-	//glScissor(startX,startY,width-startX,height-startY);
-	//glEnable(GL_SCISSOR_TEST);
-	//glClearColor(0,0,0,0);
-	//glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glScissor(startX,startY,width-startX,height-startY);
+	glEnable(GL_SCISSOR_TEST);
+	glClearColor(0,0,0,0);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glViewport(startX,startY,width-startX,height-startY);
 	v2.draw();
-	//glDisable(GL_SCISSOR_TEST);
+	glDisable(GL_SCISSOR_TEST);
 
 	if (frames>500)
 	{
@@ -243,11 +244,13 @@ void display(sf::RenderWindow *window)
 	}
 	stringstream str;
 
-	str << "Frame rate " << frame_rate;
+	int steps = v2.getSteps();
+	str << "Optimal Path: " << optimalPath << "\tSteps: " << steps;
+	//str << "Frame rate: " << frame_rate;
+
+	//cout << str.str() << endl;
 	// Draw some text on top of our OpenGL object
-	//drawText(window,str.str(),window->getSize().x,20);
-    
-	
+	drawText(window,str.str(),window->getSize().x*.3,30);
 	// Finally, display the rendered frame on screen
 	window->display();
 //	cout << "Rendering" << endl;
@@ -264,13 +267,8 @@ void resize(int w,int h)
     //delegate to our view class.
     v.resize(w,h);
 
-	v2.resize(w,h);
-
 	width=w;
 	height=h;
-
-
-
 
 	startX = (2.0f/3.0f)*w;
 	startY = (2.0f/3.0f)*h;
@@ -282,15 +280,8 @@ void resize(int w,int h)
 		startY += diff;
 	}
 
-	//cout << "x: " << width - startX << ", y: " << height - startY << endl;
-	
     v2.resize(w - startX,h - startY);
 
-	
-
-    //sets the viewport to cover the entire area of the resized window
-    //glViewport(leftx,topy,width,height)
-    //glViewport(0,0,w,h);
 }
 
 void init(string& filename)
@@ -306,8 +297,9 @@ void init(string& filename)
 	v.openFile(filename);
 
 	v2.initialize("maze-50x50.txt", "maze-50x50-paths.txt");
+	optimalPath = v2.getOptimalPath();
 
-	/*if (!font.loadFromFile("resources/GARA.ttf"))
-		return;*/
+	if (!font.loadFromFile("resources/sansation.ttf"))
+		return;
 
 }

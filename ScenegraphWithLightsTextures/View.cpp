@@ -80,7 +80,7 @@ void View::openFile(string filename)
 	//
 
 
-	//cout<<glGetError()<<endl;
+	//cout<<"Error: " <<glGetError()<<endl;
 
 	for (int i=0;i<gatheredLights.size();i++)
     {
@@ -182,7 +182,7 @@ void View::draw()
         modelview.pop();
 
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,600,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,350,.5),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
 
 
 
@@ -205,7 +205,7 @@ void View::draw()
     }
 
 	if(!debugBool){
-		cout<<glGetError()<<endl;
+		cout<<"GL Error View.cpp(208): "<<glGetError()<<endl;
 	}
 	//END LIGHTING
 

@@ -68,6 +68,8 @@ class TwoDView
 		void dragRect(int x1, int y1, int x2, int y2);
 		void finalRect(int x1, int y1, int x2, int y2);
 		bool navigate(int inputKey);
+		int getSteps();
+		int getOptimalPath();
 
 	protected:
 		GLuint createShaders(ShaderInfo *shaders);
@@ -88,7 +90,7 @@ class TwoDView
 		vector< vector<PathCoords> > path;
 
 		int direction; //0 ^	1 >		2 v		3 <
-		int curCol, curRow;
+		int curCol, curRow, steps, optimalPath;
 		bool backwards;
 		void setCursor();
 

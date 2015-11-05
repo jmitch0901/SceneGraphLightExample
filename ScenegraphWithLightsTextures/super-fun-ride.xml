@@ -44,6 +44,15 @@
 																<set>
 																	<translate>60 0 0</translate>
 																</set>
+                                                                <!--<light>
+                                                                    <ambient>0.8 0.8 0.8</ambient>
+                                                                    <diffuse>0.8 0.8 0.8</diffuse>
+                                                                    <specular>0.8 0.8 0.8</specular>
+                                                                    <position>0 6 -5</position>
+                                                                    <direction>0 1 0 </direction>
+			                                                        <spotangle>5</spotangle>
+			                                                        <spotdirection>1 0 0 </spotdirection>
+                                                                </light>-->
 																<group name ="seat">
 																	<transform name ="back-rest">
 																		<set>
