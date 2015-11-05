@@ -31,6 +31,7 @@ void drawText(sf::RenderWindow& window,string text,int x,int y);
 
 View v; //an object to our View class that encapsulates everything that we do.
 TwoDView v2;
+bool navi;
 
 sf::Font font;
 sf::Clock sfclock;
@@ -116,6 +117,28 @@ void processEvent(sf::Event event,sf::RenderWindow& window)
 		case sf::Keyboard::R:
 			v.openFile(filename);
 			break;
+		case sf::Keyboard::Num1:
+			v.switchView(1);
+			break;
+		case sf::Keyboard::Num2:
+			v.switchView(2);
+			break;
+		case sf::Keyboard::Left:
+			navi = v2.navigate(0);
+			v.navigate(0, navi);
+			break;
+		case sf::Keyboard::Right:
+			navi = v2.navigate(1);
+			v.navigate(1, navi);
+			break;
+		case sf::Keyboard::Up:
+			navi = v2.navigate(2);
+			v.navigate(2, navi);
+			break;
+		case sf::Keyboard::Down:
+			navi = v2.navigate(3);
+			v.navigate(3, navi);
+			break;
 		}
 		break;
 	case sf::Event::Resized:
@@ -195,7 +218,7 @@ void display(sf::RenderWindow *window)
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //this command actually clears the window.
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0,0,width,height);
-	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
+	v2.draw(); //simply delegate to our view class that has all the data and does all the rendering
 	
 
 
@@ -204,8 +227,8 @@ void display(sf::RenderWindow *window)
 	//glEnable(GL_SCISSOR_TEST);
 	//glClearColor(0,0,0,0);
 	//glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glViewport(startX,startY,width-startX,height-startY);
-	v2.draw();
+	//glViewport(startX,startY,width-startX,height-startY);
+	//v2.draw();
 	//glDisable(GL_SCISSOR_TEST);
 
 	if (frames>500)
@@ -252,14 +275,16 @@ void resize(int w,int h)
 	startX = (2.0f/3.0f)*w;
 	startY = (2.0f/3.0f)*h;
 
-	/*if(startX<startY){
-		startY = startX;
+	int diff = abs((height - startY) - (width - startX));
+	if((height - startY) < (width - startX)){
+		startX += diff;
 	} else{
-		startX = startY;
-	}*/
+		startY += diff;
+	}
 
-	//startX = (startX + startY) / 2;
-	//startY = startX;
+	//cout << "x: " << width - startX << ", y: " << height - startY << endl;
+	
+    v2.resize(w - startX,h - startY);
 
 	
 

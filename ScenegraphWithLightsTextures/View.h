@@ -67,6 +67,8 @@ public:
 
     void mousepress(int x,int y);
     void mousemove(int x,int y);
+	void switchView(int viewNumber);
+	void navigate(int inputKey, bool valid);
 
     //helper functions to probe the supported (latest) version of OpenGL and GLSL.
     void getOpenGLVersion(int *major,int *minor);

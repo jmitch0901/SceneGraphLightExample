@@ -172,7 +172,7 @@ void View::initialize()
 
 void View::draw()
 {
-	time += 0.1f;
+	time += 0.01f;
 	sgraph.animate(time);
     /*
      *The modelview matrix for the View class is going to store the world-to-view transformation
@@ -251,6 +251,16 @@ void View::draw()
 
 
 	debugBool=true;
+}
+
+void View::switchView(int viewNumber1){
+	//if(viewNumber1 > 0 && viewNumber1 < 3) viewNumber = viewNumber1;
+}
+
+void View::navigate(int inputKey, bool valid){
+	if(valid){
+
+	}
 }
 
 void View::mousepress(int x, int y)

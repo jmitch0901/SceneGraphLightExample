@@ -98,6 +98,9 @@ void TwoDView::initialize(string fileName, string pathFile)
 	//cout << "row 0: " << path[0][1].row << ", col 1: " << path[0][1].col << endl;
 	pushPath(start[0], start[1]);
 
+	navigate(4);
+
+
     
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
@@ -353,6 +356,126 @@ void TwoDView::finalRect(int x1, int y1, int x2, int y2){
 
 }
 
+bool TwoDView::navigate(int inputKey){
+	switch(inputKey){
+		case 0:			//Left
+			cout << "we made it." << endl;
+			if(direction == 0) direction = 3;
+			else direction = (direction - 1) % 4;
+			cout << direction << endl;
+			setCursor();
+			break;
+		case 1:			//Right
+
+			break;
+		case 2:			//Forward
+
+			break;
+		case 3:			//Backward
+
+			break;
+		case 4:{			//Initialize;
+			GLfloat colors2[3] = {0, 1, 0};
+
+			int totalVerts = vdata.size() - 1;
+			GLfloat vertices[][4] =
+			{
+				{0, 0, 0, 1.0f},
+				{0, 0, 0, 1.0f},
+				{0, 0, 0, 1.0f}
+			};
+
+			for (int i = 0; i < 3; i++){
+				VAttribs v;
+				vdata.push_back(v);
+				totalVerts = vdata.size() - 1;
+				for (int j = 0; j < 3; j++){
+					vdata[totalVerts].color[j] = colors2[j];
+				}
+
+				for (int j = 0; j < 4; j++){
+					vdata[totalVerts].position[j] = vertices[i][j];
+				}
+				indices.push_back(totalVerts);						//Add to end of indices array.
+			}
+
+
+			setCursor();
+
+			break;
+		}
+		default:
+			break;
+	}
+	return true;
+}
+
+void TwoDView::setCursor(){
+	int totalVerts = vdata.size() - 3;
+
+	int topLeftVert, topRightVert, bottomLeftVert, bottomRightVert;
+	topLeftVert = curRow * (col + 1) + curCol;
+	topRightVert = topLeftVert + 1;
+	bottomLeftVert = topLeftVert + col + 1;
+	bottomRightVert = topLeftVert + col + 2;
+
+	float vert1X = 0, vert1Y = 0, vert2X = 0, vert2Y = 0, vert3X = 0, vert3Y = 0;
+
+	switch(direction){					 //0 ^	1 >		2 v		3 <
+		case 0:
+			vert1X = vdata[bottomLeftVert].position[0];
+			vert1Y = vdata[bottomLeftVert].position[1];
+			vert2X = vdata[bottomRightVert].position[0];
+			vert2Y = vdata[bottomRightVert].position[1];
+			vert3X = (vert1X + vert2X) / 2.0f;
+			vert3Y = vdata[topLeftVert].position[1];
+			break;
+		case 1:
+			vert1X = vdata[topLeftVert].position[0];
+			vert1Y = vdata[topLeftVert].position[1];
+			vert2X = vdata[bottomLeftVert].position[0];
+			vert2Y = vdata[bottomLeftVert].position[1];
+			vert3X = vdata[bottomRightVert].position[0];
+			vert3Y = (vert1Y + vert2Y) / 2.0f;
+			break;
+		case 2:
+			vert1X = vdata[topLeftVert].position[0];
+			vert1Y = vdata[topLeftVert].position[1];
+			vert2X = vdata[topRightVert].position[0];
+			vert2Y = vdata[topRightVert].position[1];
+			vert3X = (vert1X + vert2X) / 2.0f;
+			vert3Y = vdata[bottomLeftVert].position[1];
+			break;
+		case 3:
+			vert1X = vdata[topRightVert].position[0];
+			vert1Y = vdata[topRightVert].position[1];
+			vert2X = vdata[bottomRightVert].position[0];
+			vert2Y = vdata[bottomRightVert].position[1];
+			vert3X = vdata[bottomLeftVert].position[0];
+			vert3Y = (vert1Y + vert2Y) / 2.0f;
+			break;
+		default:
+			break;
+	}
+
+	vdata[totalVerts].position[0] = vert1X;
+	vdata[totalVerts].position[1] = vert1Y;
+	vdata[totalVerts+1].position[0] = vert2X;
+	vdata[totalVerts+1].position[1] = vert2Y;
+	vdata[totalVerts+2].position[0] = vert3X;
+	vdata[totalVerts+2].position[1] = vert3Y;
+
+	glBindBuffer(GL_ARRAY_BUFFER,vbo[ArrayBuffer]);
+
+	
+	glBufferData(GL_ARRAY_BUFFER,sizeof(VAttribs)*vdata.size(),&vdata[0],GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[IndexBuffer]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER,vbo[ArrayBuffer]);
+}
+
 void TwoDView::draw()
 {
 	glUseProgram(program);
@@ -365,7 +488,10 @@ void TwoDView::draw()
 	
     glBindVertexArray(vao);
   
-    glDrawElements(GL_LINES,indices.size(),GL_UNSIGNED_INT,BUFFER_OFFSET(0));
+    glDrawElements(GL_LINES,indices.size() - 3/*account for triangle cursor*/,GL_UNSIGNED_INT,BUFFER_OFFSET(0));
+
+
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, BUFFER_OFFSET(sizeof(GLuint)*(indices.size()-3)));
 	
 
 	glBindVertexArray(0);
@@ -530,8 +656,19 @@ void TwoDView::parseFile(string fileName){
 		} else if(itr == 2){
 			ss >> temp;
 			start.push_back(temp);
+			curRow = temp;
 			ss >> temp;
 			start.push_back(temp);
+			curCol = temp;
+			if(curCol == 0){
+				direction = 1;
+			} else if(curCol == col - 1){
+				direction = 3;
+			} else if(curRow == 0){
+				direction = 2;
+			} else if(curRow == row - 1){
+				direction = 0;
+			}
 			ss >> temp;
 			end.push_back(temp);
 			ss >> temp;
