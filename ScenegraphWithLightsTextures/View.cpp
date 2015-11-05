@@ -20,6 +20,8 @@ View::View()
     trackballTransform = glm::mat4(1.0);
 	time = 0.0;
 	debugBool=false;
+	directionMrMarshmellowIsFacing=2;//0=west, 1=north, 2=east, 3=south 
+	mrMarshmellow=NULL;
 }
 
 View::~View()
@@ -122,6 +124,7 @@ void View::openFile(string filename)
 	//cout<<glGetError()<<endl;
 	//END LIGHTING GATHERING
 
+	mrMarshmellow = sgraph.getInstance("mr_marshmellow");
 
 
 
@@ -161,7 +164,6 @@ void View::initialize()
 	//cout<<glGetError()<<endl;
 	
 	glUseProgram(0);
-    
 }
 
 void View::draw()
@@ -214,13 +216,64 @@ void View::draw()
 	debugBool=true;
 }
 
-void View::switchView(int viewNumber1){
-	//if(viewNumber1 > 0 && viewNumber1 < 3) viewNumber = viewNumber1;
+void View::helloMrMarshmellow(){
+	//Let the camera be in the coordinate system of mr. marshmellow
 }
 
-void View::navigate(int inputKey, bool valid){
-	if(valid){
+void View::goodbyeMrMarshmellow(){
+	//Say goodbye to mr. marshmellow, as you rudely rip the camera away from his delicious face.
+}
 
+void View::moveMrMarshmellow(int inputKey, bool valid){
+
+	if(valid){
+		switch(inputKey){
+		case 0://left arrow
+			directionMrMarshmellowIsFacing--;
+
+			if(directionMrMarshmellowIsFacing==-1){
+				directionMrMarshmellowIsFacing = 3;
+			}
+			//Just do a rotate left 90 degrees
+
+
+			break;
+		case 1://right arrow
+			directionMrMarshmellowIsFacing++;
+
+			if(directionMrMarshmellowIsFacing==4){
+				directionMrMarshmellowIsFacing=0;
+			}
+
+			//just do a rotate right 90 degrees
+
+			break;
+		case 2://up arrow
+			//Just translate mr. marshmellow up and his deliciousness by a factor of a cell height
+			interpretMrMarshmellowsTranslation(2);
+			break;
+		case 3://down arrow
+			//Just translate mr. marshmellow down and his deliciousness by a factor of a cell height
+			interpretMrMarshmellowsTranslation(3);
+			break;
+
+		}
+	}
+}
+
+void View::interpretMrMarshmellowsTranslation(int arrowDirection){
+	switch (directionMrMarshmellowIsFacing)
+	{
+	case 0://west
+		break;
+	case 1://north
+		break;
+	case 2://east
+		break;
+	case 3://south
+		break;
+	default:
+		break;
 	}
 }
 

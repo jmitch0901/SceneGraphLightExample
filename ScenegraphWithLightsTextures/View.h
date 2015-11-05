@@ -64,12 +64,15 @@ public:
 
     void mousepress(int x,int y);
     void mousemove(int x,int y);
-	void switchView(int viewNumber);
-	void navigate(int inputKey, bool valid);
 
     //helper functions to probe the supported (latest) version of OpenGL and GLSL.
     void getOpenGLVersion(int *major,int *minor);
     void getGLSLVersion(int *major,int *minor);
+
+	void helloMrMarshmellow();
+	void goodbyeMrMarshmellow();
+
+	void moveMrMarshmellow(int inputKey, bool valid);
 
 protected:
     //helper function to compile and link our GLSL shaders
@@ -84,9 +87,13 @@ private:
     //IDs for locating various variables in our shaders
     //GLint projectionLocation,modelviewLocation,objectColorLocation;
 
+	int directionMrMarshmellowIsFacing;//0=west, 1=north, 2=east, 3=south 
 	graphics::Object * avatar;
 
     Scenegraph sgraph;
+
+	graphics::Object * mrMarshmellow;
+	void interpretMrMarshmellowsTranslation(int arrowDirection);
 
     //the actual projection and modelview matrices
     stack<glm::mat4> proj,modelview;
