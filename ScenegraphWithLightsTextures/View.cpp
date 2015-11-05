@@ -172,7 +172,7 @@ void View::initialize()
 
 void View::draw()
 {
-	time += 0.001;
+	time += 0.1f;
 	sgraph.animate(time);
     /*
      *The modelview matrix for the View class is going to store the world-to-view transformation
@@ -185,7 +185,7 @@ void View::draw()
         modelview.pop();
 
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,20,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,200,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
 
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
 

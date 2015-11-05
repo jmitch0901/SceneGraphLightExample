@@ -26,6 +26,7 @@ public:
     void makeScenegraph(Node *root);
     void initShaderProgram(GLint shaderProgram);
     void draw(stack<glm::mat4>& modelView);
+	void initAnimate();
 	vector<glm::mat4> gatherLightingMatrices();
 	vector<graphics::Light> gatherLightingObjects();
 
@@ -36,7 +37,7 @@ public:
 	}
 
 	void addTexture(graphics::Texture *tex)
-	{
+	{ 
 		if (instances.count(tex->getName())<1)
 			textures[tex->getName()] = tex;
 	}
@@ -69,7 +70,8 @@ private:
 	map<string,graphics::Object *> instances;
 	map<string,graphics::Texture *> textures;
 
-	
+	TransformNode *central_spin, *ra, *ba, *la, *fa;
+	TransformNode *diskRotate, *pistonTranslate;
 
 	//GLint objectColorLocation,modelviewLocation;
 

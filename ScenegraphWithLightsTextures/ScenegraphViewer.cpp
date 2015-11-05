@@ -41,7 +41,7 @@ int mouseX,mouseY;
 
 int width, height, startX, startY;
 
-string filename = "scene-maze.xml";
+string filename = "full-scene.xml";
 
 int main(int argc, char *argv[])
 {
@@ -200,13 +200,13 @@ void display(sf::RenderWindow *window)
 
 
 
-	glScissor(startX,startY,width-startX,height-startY);
-	glEnable(GL_SCISSOR_TEST);
-	glClearColor(0,0,0,0);
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	//glScissor(startX,startY,width-startX,height-startY);
+	//glEnable(GL_SCISSOR_TEST);
+	//glClearColor(0,0,0,0);
+	//glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glViewport(startX,startY,width-startX,height-startY);
 	v2.draw();
-	glDisable(GL_SCISSOR_TEST);
+	//glDisable(GL_SCISSOR_TEST);
 
 	if (frames>500)
 	{
