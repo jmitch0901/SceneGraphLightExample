@@ -88,9 +88,8 @@ int main(int argc, char *argv[])
 
 		if (window.isOpen())
 			display(&window);
-    }
 
-    
+    }
 
     return EXIT_SUCCESS;
 }
@@ -155,7 +154,7 @@ void drawText(sf::RenderWindow *window,string text,int x,int y)
     textobj.setColor(sf::Color(255, 255, 255, 255));
 
 	
-    textobj.setPosition((float)x-18*10,(float)y);
+    textobj.setPosition((float)x-18*25,(float)y);
 
 	textobj.setCharacterSize(18);
 
@@ -198,8 +197,6 @@ void display(sf::RenderWindow *window)
 	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
 	
 
-
-
 	//glScissor(startX,startY,width-startX,height-startY);
 	//glEnable(GL_SCISSOR_TEST);
 	//glClearColor(0,0,0,0);
@@ -222,7 +219,7 @@ void display(sf::RenderWindow *window)
 
 	str << "Frame rate " << frame_rate;
 	// Draw some text on top of our OpenGL object
-	//drawText(window,str.str(),window->getSize().x,20);
+	drawText(window,str.str(),window->getSize().x,20);
     
 	
 	// Finally, display the rendered frame on screen
@@ -246,26 +243,8 @@ void resize(int w,int h)
 	width=w;
 	height=h;
 
-
-
-
 	startX = (2.0f/3.0f)*w;
 	startY = (2.0f/3.0f)*h;
-
-	/*if(startX<startY){
-		startY = startX;
-	} else{
-		startX = startY;
-	}*/
-
-	//startX = (startX + startY) / 2;
-	//startY = startX;
-
-	
-
-    //sets the viewport to cover the entire area of the resized window
-    //glViewport(leftx,topy,width,height)
-    //glViewport(0,0,w,h);
 }
 
 void init(string& filename)
@@ -282,7 +261,7 @@ void init(string& filename)
 
 	v2.initialize("maze-50x50.txt", "maze-50x50-paths.txt");
 
-	/*if (!font.loadFromFile("resources/GARA.ttf"))
-		return;*/
+	if (!font.loadFromFile("resources/GARA.ttf"))
+		return;
 
 }

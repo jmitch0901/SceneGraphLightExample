@@ -58,6 +58,11 @@ public:
 	virtual void draw(stack<glm::mat4> &modelView)
     {
 
+
+		if(instanceOf->getName() == "maze-floor"){
+			
+		}
+
 		GLuint a;
         if (instanceOf!=NULL)
 		{

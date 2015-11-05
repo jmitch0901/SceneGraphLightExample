@@ -2,19 +2,20 @@
 	<instance name="box" path="models/box" />
 	<image name="walls" path="brick.png" />
 	<image name="floor" path="grass.png" />
+  <image name="white" path="white.png" />
 	<transform>
 		<set>
 			<scale>2 2 2</scale>
 		</set>
-		<light>
+		<!--<light>
 			<ambient>0.6 0.6 0.6</ambient>
 			<diffuse>0.6 0.6 0.6</diffuse>
 			<specular>0.8 0.8 0.8</specular>
-			<position>100 20 50</position>
+			<position>100 20 50</position>-->
 			<!--<direction>0 1 0 </direction>
 			<spotangle>5</spotangle>
 			<spotdirection>1 0 0 </spotdirection>-->
-		</light>
+		<!--</light>-->
     <!--<light>
 			<ambient>0.8 0.8 0.8</ambient>
 			<diffuse>0.8 0.8 0.8</diffuse>
@@ -38,7 +39,7 @@
 					<spotangle>90</spotangle>
 					<spotdirection>1 0 0 </spotdirection>
 				</light>-->
-				<object instanceof="box" texture="floor">
+				<object instanceof="box" texture="floor" name="maze-floor">
 					<material>
 						<ambient>1 1 1</ambient>
 						<diffuse>.8 .8 .8</diffuse>
@@ -51,6 +52,24 @@
 					</material>
 				</object>
 			</transform>
+      <transform>
+        <set>
+          <scale>.75 3 .75</scale>
+          <translate>-74 2.5 50</translate>
+        </set>
+        <object instanceof="cylinder" texture="white" name="mr_marshmellow">
+          <material>
+            <ambient>1 1 1</ambient>
+            <diffuse>.8 .8 .8</diffuse>
+            <specular>.8 .8 .8</specular>
+            <shininess>10</shininess>
+            <absorption>0.5 </absorption>
+            <reflection>0.1</reflection>
+            <transparency>0.4</transparency>
+            <refractive>1.2</refractive>
+          </material>
+        </object>
+      </transform>
 			<transform>
 				<set>
 					<scale>-0.3 3.75 -3</scale>

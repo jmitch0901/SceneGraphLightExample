@@ -80,8 +80,6 @@ vector<graphics::Light> Scenegraph::gatherLightingObjects(){
 void Scenegraph::draw(stack<glm::mat4>& modelView)
 {
 
-	//Get the light vector for ALL nodes, with respect
-	//to the view's coordinate system.
 
     if (root!=NULL)
     {
@@ -114,6 +112,8 @@ void Scenegraph::initAnimate(){
 
 void Scenegraph::animate(float time)
 {
+
+	
 	if(pistonTranslate!=NULL){		
 		pistonTranslate->setAnimationTransform(glm::translate(glm::mat4(1.0f),glm::vec3(0,glm::sin(time)*30,0)));
 	}
