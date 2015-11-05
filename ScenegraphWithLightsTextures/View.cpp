@@ -172,7 +172,7 @@ void View::initialize()
 
 void View::draw()
 {
-	time += 0.001;
+	time += 0.1f;
 	sgraph.animate(time);
     /*
      *The modelview matrix for the View class is going to store the world-to-view transformation
