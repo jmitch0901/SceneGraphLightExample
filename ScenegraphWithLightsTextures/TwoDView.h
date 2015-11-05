@@ -89,6 +89,7 @@ class TwoDView
 
 		int direction; //0 ^	1 >		2 v		3 <
 		int curCol, curRow;
+		bool backwards;
 		void setCursor();
 
 		void parseFile(string fileName);

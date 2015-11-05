@@ -357,22 +357,57 @@ void TwoDView::finalRect(int x1, int y1, int x2, int y2){
 }
 
 bool TwoDView::navigate(int inputKey){
+	int walls = mazeArr[curRow][curCol];
 	switch(inputKey){
 		case 0:			//Left
-			cout << "we made it." << endl;
 			if(direction == 0) direction = 3;
 			else direction = (direction - 1) % 4;
-			cout << direction << endl;
+			//cout << direction << endl;
 			setCursor();
 			break;
 		case 1:			//Right
-
+			direction = (direction + 1) % 4;
+			//cout << direction << endl;
+			setCursor();
 			break;
-		case 2:			//Forward
-
+		case 2:			//Forward		Direction: 0 ^			1 >				2 v				3 <
+						//Walls					   # % 8 > 3	# % 4 > 1		# % 2 = 1		# % 16 > 7
+			
+			if((direction == 0 && walls % 8 > 3) || (direction == 1 && walls % 4 > 1) || (direction == 2 && walls % 2 == 1) || (direction == 3 && walls % 16 > 7)){
+				return false;
+			} else if(curRow == start[0] && curCol == start[1] && direction == start[2]){
+				cout << "There is no escape." << endl;
+				return false;
+			} else if(curRow == end[0] && curCol == end[1] && direction == end[2]){
+				cout << "There is no escape." << endl;
+				return false;
+			} else{
+				switch(direction){
+					case 0:
+						curRow--;
+						break;
+					case 1:
+						curCol++;
+						break;
+					case 2:
+						curRow++;
+						break;
+					case 3:
+						curCol--;
+						break;
+				}
+				if(!backwards){
+					setCursor();
+				}
+			}
 			break;
 		case 3:			//Backward
-
+			backwards = true;
+			direction = (direction + 2) % 4;
+			navigate(2);
+			direction = (direction + 2) % 4;
+			setCursor();
+			backwards = false;
 			break;
 		case 4:{			//Initialize;
 			GLfloat colors2[3] = {0, 1, 0};
@@ -399,6 +434,7 @@ bool TwoDView::navigate(int inputKey){
 				indices.push_back(totalVerts);						//Add to end of indices array.
 			}
 
+			backwards = false;
 
 			setCursor();
 
@@ -662,17 +698,31 @@ void TwoDView::parseFile(string fileName){
 			curCol = temp;
 			if(curCol == 0){
 				direction = 1;
+				start.push_back(3);				//start[3] is invalid direction from start (out of maze)
 			} else if(curCol == col - 1){
 				direction = 3;
+				start.push_back(1);
 			} else if(curRow == 0){
 				direction = 2;
+				start.push_back(0);
 			} else if(curRow == row - 1){
 				direction = 0;
+				start.push_back(2);
 			}
 			ss >> temp;
 			end.push_back(temp);
+			int endRow = temp;
 			ss >> temp;
 			end.push_back(temp);
+			if(endRow == 0){
+				end.push_back(0);
+			} else if(endRow == row - 1){
+				end.push_back(2);
+			} else if(temp == 0){
+				end.push_back(3);				//end[3] is invalid direction from start (out of maze)
+			} else if(temp == col - 1){			//Bugged for start/exits in corner cells
+				end.push_back(1);
+			}
 			itr++;
 		} else{
 			for(int j = 0; j < col; j++){
