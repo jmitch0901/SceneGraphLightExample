@@ -13,15 +13,7 @@
       <set>
         <scale>3 3 3</scale>
       </set>
-      <light>
-        <ambient>0.6 0.6 0.6</ambient>
-        <diffuse>0.6 0.6 0.6</diffuse>
-        <specular>0.8 0.8 0.8</specular>
-        <position>100 20 50</position>
-        <!--<direction>0 1 0 </direction>
-			<spotangle>5</spotangle>
-			<spotdirection>1 0 0 </spotdirection>-->
-      </light>
+      
 
       <group name="full-model">
 
@@ -212,6 +204,15 @@
                   <set>
                     <rotate>270 0 1 0</rotate>
                   </set>
+                  <light>
+                    <ambient>0.6 0.6 0.6</ambient>
+                    <diffuse>0.6 0.6 0.6</diffuse>
+                    <specular>0.8 0.8 0.8</specular>
+                    <position>100 20 50</position>
+                    <!--<direction>0 1 0 </direction>
+			<spotangle>5</spotangle>
+			<spotdirection>1 0 0 </spotdirection>-->
+                  </light>
                   <group copyof="complete-chair"></group>
                 </transform>
                 <!--end copy 3 chairs-->

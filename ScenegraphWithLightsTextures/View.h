@@ -62,9 +62,6 @@ public:
     void draw();
     void openFile(string filename);
 
-	void usePhongShading();
-	void useGouraudShading();
-
     void mousepress(int x,int y);
     void mousemove(int x,int y);
 	void switchView(int viewNumber);
@@ -86,6 +83,8 @@ private:
     int WINDOW_WIDTH,WINDOW_HEIGHT;
     //IDs for locating various variables in our shaders
     //GLint projectionLocation,modelviewLocation,objectColorLocation;
+
+	graphics::Object * avatar;
 
     Scenegraph sgraph;
 

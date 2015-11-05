@@ -64,13 +64,8 @@ public:
 
 		//Now apply transformations
 		for(int i = 0; i < returnMe.size(); i++){
-			//glm::vec4 transformLight = this->transform * returnMe[i].getPosition();
-
-			//returnMe[i].setDirection(transformLight);
-			//returnMe[i].setPosition(transform * returnMe[i].getPosition()));
-
-			/*returnMe[i].getSpotDirection() =*/ returnMe[i].setSpotDirection(glm::vec3( this->transform * returnMe[i].getSpotDirection()));
-			/*returnMe[i].getPosition() = */ returnMe[i].setPosition(glm::vec3(this->transform * returnMe[i].getPosition()));
+			returnMe[i].setSpotDirection(glm::vec3(returnMe[i].getSpotDirection() * this->transform * animation_transform ));
+			returnMe[i].setPosition(glm::vec3(returnMe[i].getPosition() * this->transform * animation_transform ));
 		}
 		
 		return returnMe;

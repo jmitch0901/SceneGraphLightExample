@@ -7,7 +7,6 @@
 #include <vector>
 using namespace std;
 
-
 //glm headers to access various matrix producing functions, like ortho below in resize
 #include <glm/gtc/matrix_transform.hpp>
 //the glm header required to convert glm objects into normal float/int pointers expected by OpenGL
@@ -25,7 +24,7 @@ View::View()
 
 View::~View()
 {
-    
+    delete avatar;
 }
 
 void View::resize(int w, int h)
@@ -121,11 +120,6 @@ void View::openFile(string filename)
 
 	
 	//cout<<glGetError()<<endl;
-
-
-
-
-
 	//END LIGHTING GATHERING
 
 
@@ -174,6 +168,7 @@ void View::draw()
 {
 	time += 0.01f;
 	sgraph.animate(time);
+	gatheredLights = sgraph.gatherLightingObjects();
     /*
      *The modelview matrix for the View class is going to store the world-to-view transformation
      *This effectively is the transformation that changes when the camera parameters chang
@@ -185,25 +180,19 @@ void View::draw()
         modelview.pop();
 
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,200,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,600,20),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
 
+
+
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    sgraph.draw(modelview);
+
+	
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
 
-
-	if(!debugBool){
-		cout<<glGetError()<<endl;
-	}
-	
-
 	//START LIGHTING
-	//BUG HERE
 	glUniform1i(sgraph.numLightsLocation,gatheredLights.size());
 
-	if(!debugBool){
-		cout<<glGetError()<<endl;
-	}
-
-	//vector<glm::mat4> lightMatrix =  sgraph.gatherLightingMatrices();
 	for (int i=0;i<lightLocations.size();i++)
     {
 		//The equivalent to glBufferData, accept for lighting
@@ -216,40 +205,12 @@ void View::draw()
 	if(!debugBool){
 		cout<<glGetError()<<endl;
 	}
-
-
 	//END LIGHTING
 
 
-	//DO WE NEED TO DRAW THE GRAPH FIRST????
-	/*
-     *Instead of directly supplying the modelview matrix to the shader here, we pass it to the objects
-     *This is because the object's transform will be multiplied to it before it is sent to the shader
-     *for vertices of that object only.
-     *
-     *Since every object is in control of its own color, we also pass it the ID of the color
-     *in the activated shader program.
-     *
-     *This is so that the objects can supply some of their attributes without having any direct control
-     *of the shader itself.
-     */
-
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-    sgraph.draw(modelview);
-
-
-
-
-
-	if(!debugBool){
-		cout<<glGetError()<<endl;
-	}
     glFinish();
-
 	glUseProgram(0);
     modelview.pop();
-
-
 	debugBool=true;
 }
 
@@ -427,19 +388,6 @@ void View::getGLSLVersion(int *major,int *minor)
 }
 
 
-void View::useGouraudShading()
-{
-	program = g_program;
-
-	projectionLocation = glGetUniformLocation(program,"projection");
-}
-
-void View::usePhongShading()
-{
-	program = p_program;
-
-	projectionLocation = glGetUniformLocation(program,"projection");
-}
 
 
 
