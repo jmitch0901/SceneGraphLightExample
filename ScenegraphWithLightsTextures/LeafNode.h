@@ -34,6 +34,11 @@ public:
 		this->instanceOf->setMaterial(material);
 
 		texture=NULL;
+
+
+		
+
+		
 	}
 
 	~LeafNode(void)
@@ -48,6 +53,12 @@ public:
 		return newclone;
 	}
 
+	virtual graphics::Object * getInstanceOf(string name){
+		cout<<"I FOUND YOU!"<<endl;
+		cout<<instanceOf->getName()<<endl;
+		return instanceOf;
+	}
+
 
 	//DIRECTION AS WELL
 	virtual vector<graphics::Light> grabLightingObjects(){
@@ -57,11 +68,6 @@ public:
 
 	virtual void draw(stack<glm::mat4> &modelView)
     {
-
-
-		if(instanceOf->getName() == "maze-floor"){
-			
-		}
 
 		GLuint a;
         if (instanceOf!=NULL)
@@ -83,23 +89,7 @@ public:
 			glUniform3fv(scenegraph->mat_specularLocation,1,glm::value_ptr(material.getSpecular()));
 			glUniform1f(scenegraph->mat_shininessLocation,material.getShininess());
 			
-			glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()));
-
-
-
-
-
-
-			//glEnable(GL_TEXTURE_2D);//Tell openGL don't ignore my texture mapping commands
-			//glActiveTexture(GL_TEXTURE0);//Starts at 0 -> 8, can use to layer mroe textures
-
-
-			//glBindTexture(GL_TEXTURE_2D,textureID);//this texture is associated with texzture 0
-			//glUniform1i(textureLocation,0); //bind GL_TEXTURE0 to sampler2D (whatever is bound to GL_TEXTURE0)
-			
-
-
-				
+			glUniformMatrix4fv(scenegraph->modelviewLocation,1,GL_FALSE,glm::value_ptr(modelView.top()));			
 			
 			if(texture!=NULL){
 				

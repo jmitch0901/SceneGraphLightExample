@@ -210,8 +210,8 @@
                     <specular>0.8 0.8 0.8</specular>
                     <position>100 20 50</position>
                     <direction>0 1 0 </direction>
-			<spotangle>5</spotangle>
-			<spotdirection>1 0 0 </spotdirection>
+			              <spotangle>5</spotangle>
+			              <spotdirection>1 0 0 </spotdirection>
                   </light>
                   <group copyof="complete-chair"></group>
                 </transform>

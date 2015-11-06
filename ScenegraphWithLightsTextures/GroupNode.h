@@ -66,7 +66,19 @@ public:
 		return returnMe;
 	}
 
-	
+	virtual graphics::Object * getInstanceOf(string name){
+
+		for(int i = 0; i < children.size(); i++){
+
+			graphics::Object *o = children[i]->getInstanceOf(name);
+
+			if(o!=NULL){
+				return o;
+			}
+		}
+		
+		return NULL;
+	}
 
 	virtual Node* getNode(string name)
 	{

@@ -52,12 +52,13 @@
 					</material>
 				</object>
 			</transform>
-      <transform>
+      
+      <transform name="mr_marshmellow">
         <set>
           <scale>.75 3 .75</scale>
-          <translate>-74 2.5 50</translate>
+          <translate>-73.5 2.5 49.5</translate>
         </set>
-        <object instanceof="cylinder" texture="white" name="mr_marshmellow">
+        <object instanceof="cylinder" texture="white" >
           <material>
             <ambient>1 1 1</ambient>
             <diffuse>.8 .8 .8</diffuse>

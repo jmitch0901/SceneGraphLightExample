@@ -30,6 +30,8 @@ public:
 	vector<glm::mat4> gatherLightingMatrices();
 	vector<graphics::Light> gatherLightingObjects();
 
+	graphics::Object * getMrMarshmellow();
+
 	void addInstance(graphics::Object *in)
 	{
 		if (instances.count(in->getName())<1)
@@ -60,19 +62,25 @@ public:
 		return textures[name];
 	}
 
+	Node * getNode(string name);
+
 
 	GLint numLightsLocation;
+
+	
 protected:
 	
 
 private:
     Node *root;
+	
 	map<string,graphics::Object *> instances;
 	map<string,graphics::Texture *> textures;
 
 	TransformNode *central_spin, *ra, *ba, *la, *fa;
 	TransformNode *diskRotate, *pistonTranslate;
 
+	graphics::Object * mrMarshmellow;
 	//GLint objectColorLocation,modelviewLocation;
 
 	GLint modelviewLocation,normalMatrixLocation;

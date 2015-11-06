@@ -20,13 +20,17 @@ View::View()
     trackballTransform = glm::mat4(1.0);
 	time = 0.0;
 	debugBool=false;
-	directionMrMarshmellowIsFacing=2;//0=west, 1=north, 2=east, 3=south 
-	mrMarshmellow=NULL;
+	directionMrMarshmellowIsFacing=1;//Direction: 0 ^	1 >		2 v		3 <
+	cameraHeight = 40;
+	marshDir = glm::vec3(100000,cameraHeight,0);
+	marshPos = glm::vec3(-441,cameraHeight,297);
+	tnMarshmellow=NULL;
+	isInFPS=false;
 }
 
 View::~View()
 {
-    delete avatar;
+    
 }
 
 void View::resize(int w, int h)
@@ -124,7 +128,17 @@ void View::openFile(string filename)
 	//cout<<glGetError()<<endl;
 	//END LIGHTING GATHERING
 
-	mrMarshmellow = sgraph.getInstance("mr_marshmellow");
+	/*mrMarshmellow = sgraph.getMrMarshmellow();
+
+	if(mrMarshmellow!=NULL){
+		cout<<"GOT EMM!"<<endl;
+		cout<<mrMarshmellow->getName()<<endl;
+	}*/
+
+	tnMarshmellow = dynamic_cast<TransformNode *>(sgraph.getNode("mr_marshmellow"));
+	if(tnMarshmellow!=NULL){
+		cout<<"GOT EMM!"<<endl;
+	}
 
 
 
@@ -182,12 +196,25 @@ void View::draw()
         modelview.pop();
 
     modelview.push(glm::mat4(1.0));
-	modelview.top() = modelview.top() * glm::lookAt(glm::vec3(0,350,.5),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+
+	//Stoer the info for both FPS and non-FPS
+
+	remembered3Pview = glm::lookAt(glm::vec3(0,350,.5),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+
+	remembered1Pview = glm::lookAt(marshPos, marshDir,glm::vec3(0,1,0));
+
+	if(isInFPS){
+		modelview.top() = modelview.top() * remembered1Pview;
+		
+	} else {
+
+		modelview.top() = modelview.top() * remembered3Pview;
+	}
 
 
-
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sgraph.draw(modelview);
+
 
 	
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
@@ -218,13 +245,25 @@ void View::draw()
 
 void View::helloMrMarshmellow(){
 	//Let the camera be in the coordinate system of mr. marshmellow
+	if(!isInFPS){
+		isInFPS = !isInFPS;
+	}
 }
 
 void View::goodbyeMrMarshmellow(){
 	//Say goodbye to mr. marshmellow, as you rudely rip the camera away from his delicious face.
+	if(isInFPS){
+		isInFPS = !isInFPS;
+	}
 }
 
 void View::moveMrMarshmellow(int inputKey, bool valid){
+
+
+	if(tnMarshmellow==NULL){
+		cout<<"OH NO! Mr marshmellow was NULL!"<<endl;
+		return;
+	}
 
 	if(valid){
 		switch(inputKey){
@@ -235,7 +274,7 @@ void View::moveMrMarshmellow(int inputKey, bool valid){
 				directionMrMarshmellowIsFacing = 3;
 			}
 			//Just do a rotate left 90 degrees
-
+			setFPSCameraDirection();
 
 			break;
 		case 1://right arrow
@@ -244,33 +283,86 @@ void View::moveMrMarshmellow(int inputKey, bool valid){
 			if(directionMrMarshmellowIsFacing==4){
 				directionMrMarshmellowIsFacing=0;
 			}
-
+			setFPSCameraDirection();
 			//just do a rotate right 90 degrees
 
 			break;
 		case 2://up arrow
 			//Just translate mr. marshmellow up and his deliciousness by a factor of a cell height
-			interpretMrMarshmellowsTranslation(2);
+			//interpretMrMarshmellowsTranslation(2);
+			moveForwards();
 			break;
 		case 3://down arrow
 			//Just translate mr. marshmellow down and his deliciousness by a factor of a cell height
-			interpretMrMarshmellowsTranslation(3);
+			//interpretMrMarshmellowsTranslation(3);
+			moveBackwards();
 			break;
 
 		}
 	}
 }
 
-void View::interpretMrMarshmellowsTranslation(int arrowDirection){
+void View::moveForwards(){
+	int moveMagnitude = 18;
+	int moveMagnitude2 = moveMagnitude/6;
+	switch(directionMrMarshmellowIsFacing){
+		case 0:
+			marshPos.z -= moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(0,0,-moveMagnitude2)) * tnMarshmellow->getTransform());
+			break;
+		case 1:
+			marshPos.x += moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(moveMagnitude2,0,0)) * tnMarshmellow->getTransform());
+			break;
+		case 2:
+			marshPos.z += moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(0,0,moveMagnitude2)) * tnMarshmellow->getTransform());
+			break;
+		case 3:
+			marshPos.x -= moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(-moveMagnitude2,0,0)) * tnMarshmellow->getTransform());
+			break;
+	}
+}
+
+void View::moveBackwards(){
+	int moveMagnitude = 18;
+	int moveMagnitude2 = moveMagnitude/6;
+	switch(directionMrMarshmellowIsFacing){
+		case 2:
+			marshPos.z -= moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(0,0,-moveMagnitude2)) * tnMarshmellow->getTransform());
+			break;
+		case 3:
+			marshPos.x += moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(moveMagnitude2,0,0)) * tnMarshmellow->getTransform());
+			break;
+		case 0:
+			marshPos.z += moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(0,0,moveMagnitude2)) * tnMarshmellow->getTransform());
+			break;
+		case 1:
+			marshPos.x -= moveMagnitude;
+			tnMarshmellow->setTransform(glm::translate(glm::mat4(1.0), glm::vec3(-moveMagnitude2,0,0)) * tnMarshmellow->getTransform());
+			break;
+	}
+}
+
+void View::setFPSCameraDirection(){
 	switch (directionMrMarshmellowIsFacing)
 	{
-	case 0://west
+	case 0:// ^
+		marshDir = glm::vec3(0,cameraHeight,-100000);
 		break;
-	case 1://north
+	case 1:// >
+		marshDir = glm::vec3(100000,cameraHeight,0);
 		break;
-	case 2://east
+	case 2:// v
+		//mrMarshmellow->setTransform(mrMarshmellow->getTransform() * glm::translate(glm::mat4(1.0f),glm::vec3(6.0f,0,0)));
+		marshDir = glm::vec3(0,cameraHeight,100000);
 		break;
-	case 3://south
+	case 3:// <
+		marshDir = glm::vec3(-100000,cameraHeight,0);
 		break;
 	default:
 		break;
@@ -284,6 +376,9 @@ void View::mousepress(int x, int y)
 
 void View::mousemove(int x, int y)
 {
+	if(isInFPS) //We don't want the trackball updating when we are in FPS mode.
+		return;
+
     int dx,dy;
 
     dx = x - prev_mouse.x;

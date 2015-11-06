@@ -17,6 +17,7 @@
 using namespace std;
 
 #include "Scenegraph.h"
+#include "TransformNode.h"
 
 /*
  * we are using glm, a mathematics library for OpenGL
@@ -88,12 +89,13 @@ private:
     //GLint projectionLocation,modelviewLocation,objectColorLocation;
 
 	int directionMrMarshmellowIsFacing;//0=west, 1=north, 2=east, 3=south 
-	graphics::Object * avatar;
 
     Scenegraph sgraph;
 
-	graphics::Object * mrMarshmellow;
-	void interpretMrMarshmellowsTranslation(int arrowDirection);
+	void setFPSCameraDirection();
+	void moveForwards();
+	void moveBackwards();
+	bool isInFPS;
 
     //the actual projection and modelview matrices
     stack<glm::mat4> proj,modelview;
@@ -106,6 +108,12 @@ private:
 
     glm::mat4 trackballTransform;
 
+	glm::mat4 remembered3Pview;
+	glm::mat4 remembered1Pview;
+
+	glm::vec3 marshPos, marshDir;
+	int cameraHeight;
+
 	//time for the animation
 	double time;
 
@@ -116,6 +124,8 @@ private:
 	vector<graphics::Light> gatheredLights;
 
 	bool debugBool;
+
+	TransformNode *tnMarshmellow;
 };
 
 #endif // VIEW_H

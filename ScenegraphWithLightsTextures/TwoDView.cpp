@@ -359,6 +359,7 @@ void TwoDView::finalRect(int x1, int y1, int x2, int y2){
 
 bool TwoDView::navigate(int inputKey){
 	int walls = mazeArr[curRow][curCol];
+	bool navi;
 	switch(inputKey){
 		case 0:			//Left
 			if(direction == 0) direction = 3;
@@ -407,12 +408,15 @@ bool TwoDView::navigate(int inputKey){
 		case 3:			//Backward
 			backwards = true;
 			direction = (direction + 2) % 4;
-			navigate(2);
+			navi = navigate(2);
 			direction = (direction + 2) % 4;
-			setCursor();
-			steps++;
+			if(navi){
+				setCursor();
+				steps++;
+			}
 			//cout << steps << endl;
 			backwards = false;
+			return navi;
 			break;
 		case 4:{			//Initialize;
 			GLfloat colors2[3] = {0, 1, 0};

@@ -9,6 +9,7 @@ using namespace std;
 Scenegraph::Scenegraph()
 {
     root = NULL;
+	mrMarshmellow = NULL;
 }
 
 void Scenegraph::makeScenegraph(Node *r)
@@ -27,7 +28,10 @@ void Scenegraph::makeScenegraph(Node *r)
 	initAnimate();
 }
 
+graphics::Object * Scenegraph::getMrMarshmellow(){
 
+	return root->getInstanceOf("mr_marshmellow");
+}
 
 Scenegraph::~Scenegraph()
 {
@@ -41,6 +45,14 @@ Scenegraph::~Scenegraph()
 	{
 		delete it->second;
 	}
+}
+
+Node * Scenegraph::getNode(string name){
+
+
+	return root->getNode(name);
+
+
 }
 
 void Scenegraph::initShaderProgram(GLint program)
@@ -62,6 +74,7 @@ void Scenegraph::initShaderProgram(GLint program)
 	textureLocation = glGetUniformLocation(program,"image");
 
 }
+
 
 
 vector<graphics::Light> Scenegraph::gatherLightingObjects(){

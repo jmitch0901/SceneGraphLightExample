@@ -3,6 +3,7 @@
 
 
 #include "Node.h"
+#include "GroupNode.h"
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -18,6 +19,10 @@ public:
 		transform = glm::mat4(1.0);
 		animation_transform = glm::mat4(1.0);
 		child = NULL;
+
+		/*if(this->name=="mr_marshmellow")
+			cout<<this->name<<endl;*/
+		
 	}
 
 	~TransformNode(void)
@@ -48,6 +53,25 @@ public:
 			newtransform->setChild(newchild);
 		}		
 		return newtransform;
+	}
+
+	virtual graphics::Object * getInstanceOf(string name){
+		cout<<this->name<<endl;
+
+		if(this->name == name){
+			cout<<this->name<<endl;
+			cout<<"Returning you my child's object"<<endl;
+			return child->getInstanceOf(name);
+		}
+
+		GroupNode *n = dynamic_cast<GroupNode *>(child);
+		
+		if(n!=NULL){
+			return child->getInstanceOf(name);
+		}
+
+		//return child->getInstanceOf(name);
+		return NULL;
 	}
 
 
@@ -99,6 +123,7 @@ public:
 	{
 		this->child = child;
 		this->child->setParent(this);
+
 	}
 
 	virtual void draw(stack<glm::mat4> &modelView)
