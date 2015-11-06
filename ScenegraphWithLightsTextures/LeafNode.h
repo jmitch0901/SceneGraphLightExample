@@ -54,8 +54,8 @@ public:
 	}
 
 	virtual graphics::Object * getInstanceOf(string name){
-		cout<<"I FOUND YOU!"<<endl;
-		cout<<instanceOf->getName()<<endl;
+		//cout<<"I FOUND YOU!"<<endl;
+		//cout<<instanceOf->getName()<<endl;
 		return instanceOf;
 	}
 
@@ -111,7 +111,7 @@ public:
 				}
 				
 			} else {
-				cout<<"THERE WAS NO TEXTURE, TARD"<<endl;
+				//cout<<"THERE WAS NO TEXTURE, TARD"<<endl;
 			}
 		}
 

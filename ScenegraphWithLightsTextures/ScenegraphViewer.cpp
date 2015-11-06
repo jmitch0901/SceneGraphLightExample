@@ -27,7 +27,7 @@ void init(string& filename);
 void resize(int w,int h);
 void display(sf::RenderWindow *window);
 void processEvent(sf::Event event,sf::RenderWindow& window);
-void drawText(sf::RenderWindow& window,string text,int x,int y);
+void drawText(sf::RenderWindow& window,string text,int x,int y); 
 
 View v; //an object to our View class that encapsulates everything that we do.
 TwoDView v2;
@@ -85,7 +85,6 @@ int main(int argc, char *argv[])
         while (window.pollEvent(event))
         {
 			processEvent(event,window);
-
         }
 
 		if (window.isOpen())
@@ -141,6 +140,7 @@ void processEvent(sf::Event event,sf::RenderWindow& window)
 			v.moveMrMarshmellow(3, navi);
 			break;
 		}
+		
 		break;
 	case sf::Event::Resized:
 		resize(event.size.width, event.size.height);
@@ -175,6 +175,8 @@ void drawText(sf::RenderWindow *window,string text,int x,int y)
 {
 	// Create some text to draw on top of our OpenGL object
   
+	//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sf::Text textobj(text, font);
     textobj.setColor(sf::Color(255, 255, 255, 255));
 
@@ -215,7 +217,7 @@ void display(sf::RenderWindow *window)
 	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
 	*/
 	//set up the background color of the window. This does NOT clear the window. Right now it is (0,0,0) which is black
-	glClearColor(0,0,0,0);
+	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //this command actually clears the window.
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0,0,width,height);
@@ -225,7 +227,7 @@ void display(sf::RenderWindow *window)
 
 	glScissor(startX,startY,width-startX,height-startY);
 	glEnable(GL_SCISSOR_TEST);
-	glClearColor(0,0,0,0);
+	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glViewport(startX,startY,width-startX,height-startY);
 	v2.draw();
@@ -242,16 +244,16 @@ void display(sf::RenderWindow *window)
 		frames++;
 	}
 
-	stringstream str1;
+	stringstream str;
 	int steps = v2.getSteps();
-	//str << "Optimal Path: " << optimalPath << "\tSteps: " << steps;
-	str1 << "Frame rate: " << frame_rate;
+	str << "Optimal Path: " << optimalPath << "\tSteps: " << steps;
+	//str1 << "Frame rate: " << frame_rate;
 
 	//cout << str.str() << endl;
 	// Draw some text on top of our OpenGL object
-	drawText(window,str1.str(),200,30);
+	
+	drawText(window,str.str(),width*.1,30);
 	// Finally, display the rendered frame on screen
-	str1.clear();
 	
 	window->display();
 //	cout << "Rendering" << endl;
@@ -300,7 +302,9 @@ void init(string& filename)
 	v2.initialize("maze-50x50.txt", "maze-50x50-paths.txt");
 	optimalPath = v2.getOptimalPath();
 
-	if (!font.loadFromFile("resources/sansation.ttf"))
+	if (!font.loadFromFile("resources/sansation.ttf")){
+		cout<<"error loading font!"<<endl;
 		return;
+	}
 
 }

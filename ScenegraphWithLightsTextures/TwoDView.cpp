@@ -519,7 +519,8 @@ void TwoDView::setCursor(){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[IndexBuffer]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER,vbo[ArrayBuffer]);
+	glBindBuffer(GL_ARRAY_BUFFER,0);
+
 }
 
 int TwoDView::getSteps(){

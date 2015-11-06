@@ -58,8 +58,8 @@ void View::resize(int w, int h)
 void View::openFile(string filename)
 {
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 
 
@@ -68,19 +68,19 @@ void View::openFile(string filename)
 	reader.importScenegraph(filename,sgraph);
 	cout << "Done" << endl;
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 
 
 
 	//GATHER THE LIGHTING AND INIT LIGHTING FOR GPU
 
-	cout<<"ABOUT TO GATHER LIGHTING"<<endl;
+	//cout<<"ABOUT TO GATHER LIGHTING"<<endl;
 	gatheredLights = sgraph.gatherLightingObjects();
-	cout<<"GOT "<<gatheredLights.size()<<" LIGHTS!"<<endl;
+	//cout<<"GOT "<<gatheredLights.size()<<" LIGHTS!"<<endl;
 
-	cout<<"Your Lights: "<<endl;
+	//cout<<"Your Lights: "<<endl;
 
 
 	//FOR DEBUGGING
@@ -89,7 +89,7 @@ void View::openFile(string filename)
 
 		glm::vec4 pos = gatheredLights[i].getPosition();
 		
-		cout<<"Light["<<i<<"]: Position(x,y,z)"<<pos[0]<<", "<<pos[1]<<", "<<pos[2]<<endl;
+		//cout<<"Light["<<i<<"]: Position(x,y,z)"<<pos[0]<<", "<<pos[1]<<", "<<pos[2]<<endl;
 	}
 	//
 
@@ -134,8 +134,8 @@ void View::openFile(string filename)
 		lightLocations.push_back(lightLocation);
     }
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 	
 	//cout<<glGetError()<<endl;
@@ -149,9 +149,7 @@ void View::openFile(string filename)
 	}*/
 
 	tnMarshmellow = dynamic_cast<TransformNode *>(sgraph.getNode("mr_marshmellow"));
-	if(tnMarshmellow!=NULL){
-		cout<<"GOT EMM!"<<endl;
-	}
+	
 
 
 
@@ -190,8 +188,8 @@ void View::initialize()
 
 	//cout<<glGetError()<<endl;
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 	
 	glUseProgram(0);
@@ -229,14 +227,14 @@ void View::draw()
 	}
 
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sgraph.draw(modelview);
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 
 	gatheredLights = sgraph.gatherLightingObjects();
@@ -246,8 +244,8 @@ void View::draw()
 	//START LIGHTING
 	glUniform1i(sgraph.numLightsLocation,gatheredLights.size());
 
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 	for (int i=0;i<lightLocations.size();i++)
     {
@@ -257,8 +255,8 @@ void View::draw()
         glUniform3fv(lightLocations[i].specularLocation,1,glm::value_ptr(gatheredLights[i].getSpecular()));
 		glUniform4fv(lightLocations[i].positionLocation,1,glm::value_ptr(modelview.top()*gatheredLights[i].getPosition()));
     }
-	if(!debugBool)
-		cout<<glGetError()<<endl;
+	/*if(!debugBool)
+		cout<<glGetError()<<endl;*/
 
 	//END LIGHTING
 

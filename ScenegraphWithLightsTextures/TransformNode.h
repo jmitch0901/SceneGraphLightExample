@@ -56,11 +56,11 @@ public:
 	}
 
 	virtual graphics::Object * getInstanceOf(string name){
-		cout<<this->name<<endl;
+		//cout<<this->name<<endl;
 
 		if(this->name == name){
-			cout<<this->name<<endl;
-			cout<<"Returning you my child's object"<<endl;
+			//cout<<this->name<<endl;
+			//cout<<"Returning you my child's object"<<endl;
 			return child->getInstanceOf(name);
 		}
 
