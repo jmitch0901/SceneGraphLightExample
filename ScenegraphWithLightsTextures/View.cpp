@@ -197,7 +197,7 @@ void View::initialize()
 
 void View::draw()
 {
-	time += 0.1f;
+	time += 0.01f;
 	sgraph.animate(time);
 	gatheredLights = sgraph.gatherLightingObjects();
     /*
