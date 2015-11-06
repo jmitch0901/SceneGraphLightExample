@@ -179,7 +179,7 @@ void drawText(sf::RenderWindow *window,string text,int x,int y)
     textobj.setColor(sf::Color(255, 255, 255, 255));
 
 	
-    textobj.setPosition((float)x-18*10,(float)y);
+    textobj.setPosition((float)x,(float)y);
 
 	textobj.setCharacterSize(18);
 
@@ -220,7 +220,6 @@ void display(sf::RenderWindow *window)
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0,0,width,height);
 	v.draw(); //simply delegate to our view class that has all the data and does all the rendering
-	
 
 
 
@@ -242,16 +241,18 @@ void display(sf::RenderWindow *window)
 	{
 		frames++;
 	}
-	stringstream str;
 
+	stringstream str1;
 	int steps = v2.getSteps();
-	str << "Optimal Path: " << optimalPath << "\tSteps: " << steps;
-	//str << "Frame rate: " << frame_rate;
+	//str << "Optimal Path: " << optimalPath << "\tSteps: " << steps;
+	str1 << "Frame rate: " << frame_rate;
 
 	//cout << str.str() << endl;
 	// Draw some text on top of our OpenGL object
-	drawText(window,str.str(),window->getSize().x*.3,30);
+	drawText(window,str1.str(),200,30);
 	// Finally, display the rendered frame on screen
+	str1.clear();
+	
 	window->display();
 //	cout << "Rendering" << endl;
 }
@@ -270,8 +271,8 @@ void resize(int w,int h)
 	width=w;
 	height=h;
 
-	startX = (2.0f/3.0f)*w;
-	startY = (2.0f/3.0f)*h;
+	startX = (2.0f/4.0f)*w;
+	startY = (2.0f/4.0f)*h;
 
 	int diff = abs((height - startY) - (width - startX));
 	if((height - startY) < (width - startX)){

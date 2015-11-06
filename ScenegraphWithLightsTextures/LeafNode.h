@@ -171,31 +171,6 @@ public:
 	{
 		//cout << "Texture set to " << tex->getName() << endl;
 		texture=tex;
-
-		/*this->texture=tex;
-		sf::Image im;
-	
-		im.loadFromFile("checkerboard.png");
-
-		//origin of the image is top left, all our texture coordinates are with respect to bottom left, so flip image vertically
-		im.flipVertically();
-
-		
-    
-		glGenTextures(1,&textureID); //get a unique texture ID
-		glBindTexture(GL_TEXTURE_2D,textureID);// bind this texture as "current". All texture commands henceforth will apply to this ID
-
-
-		//come back
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);//GL_REPEAT MEANING if larger than value 1, then REPEAT the pattern! DO this for s coordinate!
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);//GL CLAMP means anything < 0 is 0, anything > 1 is 1.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //Used for whenresolution of image is too small for pixle vount on screen
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);//GL_LINEAR / GL_NEAREST. LINEAR more appealing but more expensive.
-
-		//texture equivalent as glbufferdata
-		//ACTUALLY copies the texture over!
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, im.getSize().x,im.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, im.getPixelsPtr());//r g b a r g b a r g b a ...... in array
-		*/
 	}
 
 

@@ -37,6 +37,15 @@
 													<set>
 														<!-- emtpy for animation -->
 													</set>
+                          <light>
+                            <ambient>0.8 0.8 0.8</ambient>
+                            <diffuse>0.8 0.8 0.8</diffuse>
+                            <specular>0.8 0.8 0.8</specular>
+                            <position>60 6 -3</position>
+                            <!--<direction>0 1 0 </direction>
+			              <spotangle>5</spotangle>
+			              <spotdirection>1 0 0 </spotdirection>-->
+                          </light>
 													<group>
 														<group name ="right-seat">
 															<!-- move first seat into correct position -->
@@ -188,6 +197,7 @@
 														<rotate>90 0 1 0</rotate>
 														<rotate>30 1 0 0</rotate>
 													</set>
+                          
 													<group copyof ="right-amusement-arm-group" />
 												</transform>
 												<transform name ="left-amusement-arm">

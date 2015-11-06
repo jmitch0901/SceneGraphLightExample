@@ -57,10 +57,20 @@ void View::resize(int w, int h)
 
 void View::openFile(string filename)
 {
+
+	if(!debugBool)
+		cout<<glGetError()<<endl;
+
+
+
 	SceneXMLReader reader;
 	cout << "Loading...";
 	reader.importScenegraph(filename,sgraph);
 	cout << "Done" << endl;
+
+	if(!debugBool)
+		cout<<glGetError()<<endl;
+
 
 
 
@@ -124,6 +134,9 @@ void View::openFile(string filename)
 		lightLocations.push_back(lightLocation);
     }
 
+	if(!debugBool)
+		cout<<glGetError()<<endl;
+
 	
 	//cout<<glGetError()<<endl;
 	//END LIGHTING GATHERING
@@ -176,13 +189,17 @@ void View::initialize()
 	sgraph.initShaderProgram(program);
 
 	//cout<<glGetError()<<endl;
+
+	if(!debugBool)
+		cout<<glGetError()<<endl;
+
 	
 	glUseProgram(0);
 }
 
 void View::draw()
 {
-	time += 0.01f;
+	time += 0.1f;
 	sgraph.animate(time);
 	gatheredLights = sgraph.gatherLightingObjects();
     /*
@@ -199,7 +216,7 @@ void View::draw()
 
 	//Stoer the info for both FPS and non-FPS
 
-	remembered3Pview = glm::lookAt(glm::vec3(0,350,.5),glm::vec3(0,0,0),glm::vec3(0,1,0)) * trackballTransform;
+	remembered3Pview = glm::lookAt(glm::vec3(0,350,.5),glm::vec3(0,0,0),glm::vec3(0,1,0)) /* trackballTransform*/;
 
 	remembered1Pview = glm::lookAt(marshPos, marshDir,glm::vec3(0,1,0));
 
@@ -212,15 +229,25 @@ void View::draw()
 	}
 
 
+	if(!debugBool)
+		cout<<glGetError()<<endl;
+
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     sgraph.draw(modelview);
 
+	if(!debugBool)
+		cout<<glGetError()<<endl;
 
+
+	gatheredLights = sgraph.gatherLightingObjects();
 	
 	glUniformMatrix4fv(projectionLocation,1,GL_FALSE,glm::value_ptr(proj.top()));
 
 	//START LIGHTING
 	glUniform1i(sgraph.numLightsLocation,gatheredLights.size());
+
+	if(!debugBool)
+		cout<<glGetError()<<endl;
 
 	for (int i=0;i<lightLocations.size();i++)
     {
@@ -228,12 +255,11 @@ void View::draw()
 		glUniform3fv(lightLocations[i].ambientLocation,1,glm::value_ptr(gatheredLights[i].getAmbient()));
         glUniform3fv(lightLocations[i].diffuseLocation,1,glm::value_ptr(gatheredLights[i].getDiffuse()));
         glUniform3fv(lightLocations[i].specularLocation,1,glm::value_ptr(gatheredLights[i].getSpecular()));
-		glUniform4fv(lightLocations[i].positionLocation,1,glm::value_ptr(gatheredLights[i].getPosition()));
+		glUniform4fv(lightLocations[i].positionLocation,1,glm::value_ptr(modelview.top()*gatheredLights[i].getPosition()));
     }
+	if(!debugBool)
+		cout<<glGetError()<<endl;
 
-	if(!debugBool){
-		cout<<"GL Error View.cpp(208): "<<glGetError()<<endl;
-	}
 	//END LIGHTING
 
 

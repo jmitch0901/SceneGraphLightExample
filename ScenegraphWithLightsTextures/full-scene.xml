@@ -4,15 +4,12 @@
     <set>
       <scale>3 3 3</scale>
     </set>
-      <!--<light>
-          <ambient>0.4 0.4 0.4</ambient>
-          <diffuse>0.4 0.4 0.4</diffuse>
-          <specular>0.8 0.8 0.8</specular>
-          <position>-100 100 150</position>
-          <direction>0 1 0 </direction>
-		  <spotangle>5</spotangle>
-		  <spotdirection>1 0 0 </spotdirection>
-      </light>-->
+    <light>
+      <ambient>0.2 0.2 0.2</ambient>
+      <diffuse>0.4 0.4 0.4</diffuse>
+      <specular>0.4 0.4 0.4</specular>
+      <position>-100 50 -100</position>
+    </light>
     <group>
         <transform>
             <set>
